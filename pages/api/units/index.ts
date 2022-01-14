@@ -1,7 +1,7 @@
-import { prisma } from "../../db";
+import { prisma } from "../../../db";
 
 const Units = async (req : any, res : any) => {
-    const allUnits = await prisma.unit.findFirst();
+    const allUnits = await prisma.unit.findMany();
     res.json(allUnits);
 }
 
