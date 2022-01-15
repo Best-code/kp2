@@ -24,10 +24,10 @@ const Class = () => {
 
                 })
         }
-    }, [])
+    })
 
     return <div>
-        <div className="bg-black">
+        <div className="bg-red-900">
             {units.map((x) => {
                 return <UnitComponent name={x.name} />
             })}

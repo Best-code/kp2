@@ -1,13 +1,23 @@
 import type { NextPage } from 'next'
 import ClassCard from '../components/unit/class'
+import { Class } from '@prisma/client'
+import { useState, useEffect } from 'react'
 
 const Home: NextPage = () => {
+
+  const [courses, setCourses] = useState<Class[]>([]);
+  useEffect(() => {
+    fetch('http://localhost:3000/api/classes')
+      .then((res) => res.json())
+      .then(res => setCourses(res))
+  })
+
   return (
     <div className="flex">
-      <ClassCard name="Chemistry" def="Chemistry is the scientific study of the properties and behavior of matter." image='/chemistry_logo.jpg'/>
-      <ClassCard name="Physics" def="Physics is the scientific study of the properties and behavior of matter." image='/chemistry_logo.jpg'/>
-      <ClassCard name="AP Chemistry" def="Chemistry is the scientific study of the properties and behavior of matter." image='/chemistry_logo.jpg'/>
-   </div>
+      {courses.map((course) => {
+        return <ClassCard name={course.name} def={course.def} image={course.image} />
+      })}
+    </div>
   )
 }
 
