@@ -3,7 +3,7 @@ import { prisma } from "../../../db";
 
 const ThisClass = async (req : NextApiRequest, res : NextApiResponse) => {
     const {name} = req.query
-    const thisClass = await prisma.class.findUnique({
+    const thisClass = await prisma.class.findFirst({
         where: {
             name: String(name)
         }
