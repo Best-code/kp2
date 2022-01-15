@@ -16,6 +16,8 @@ model User {
 model Class {
   id   Int    @id @default(autoincrement())
   name String @unique
+  def String
+  image String
   unit Unit[]
 }
 
