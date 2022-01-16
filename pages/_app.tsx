@@ -3,18 +3,19 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Foot from '../components/footer'
 import Header from '../components/header'
+import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <div>
+function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
+  return <SessionProvider session={session}>
     <Head>
       <title>Mrs. Kilpatricks Awesome Website</title>
       <meta name="description" content="Created by Colin Maloney" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Header/>
+    <Header />
     <Component {...pageProps} />
-    <Foot/>
-  </div>
+    <Foot />
+  </SessionProvider>
 }
 
 export default MyApp
