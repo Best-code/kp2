@@ -1,5 +1,5 @@
 export const Foot = () => {
-    return <div className="fixed bottom-0">
+    return <div className="absolute bottom-0">
         <div className="bg-primary-kp w-screen">
             <div className="flex justify-center items-center">
                 <div className="text-left">
