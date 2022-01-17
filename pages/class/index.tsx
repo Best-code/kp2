@@ -14,9 +14,9 @@ export const ClassesPage: NextPage = () => {
 
   return (
     <div className="flex">
-      {courses.map((course) => {
-        return <ClassCard name={course.name} def={course.def} image={course.image} />
-      })}
+      {courses.map((course) => 
+          <ClassCard key={course.id} name={course.name} def={course.def} image={course.image} />
+      )}
     </div>
   )
 }

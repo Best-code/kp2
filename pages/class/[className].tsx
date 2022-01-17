@@ -21,16 +21,15 @@ const Class = () => {
                     const units = fetch(`http://localhost:3000/api/classes/units/?classId=${resData.id}`)
                         .then((res) => res.json())
                         .then((resData) => setUnits(resData))
-
                 })
         }
     })
 
     return <div>
         <div className="bg-red-900">
-            {units.map((x) => {
-                return <UnitComponent name={x.name} />
-            })}
+            {units.map((unit) => 
+                <UnitComponent key={unit.id} name={unit.name} />
+            )}
         </div>
     </div>
 }
