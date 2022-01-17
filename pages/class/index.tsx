@@ -7,7 +7,7 @@ export const ClassesPage: NextPage = () => {
 
   const [courses, setCourses] = useState<Class[]>([]);
   useEffect(() => {
-    fetch('http://localhost:3000/api/classes')
+    fetch('/api/classes')
       .then((res) => res.json())
       .then(res => setCourses(res))
   })

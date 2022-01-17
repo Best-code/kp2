@@ -13,12 +13,12 @@ const Class = () => {
     const { className } = router.query;
     useEffect(() => {
         if (className) {
-            fetch(`http://localhost:3000/api/classes/class?name=${className}`)
+            fetch(`/api/classes/class?name=${className}`)
                 .then((res) => res.json())
                 .then((resData) => {
                     console.log(resData)
                     setClassNumber(resData.id)
-                    const units = fetch(`http://localhost:3000/api/classes/units/?classId=${resData.id}`)
+                    const units = fetch(`/api/classes/units/?classId=${resData.id}`)
                         .then((res) => res.json())
                         .then((resData) => setUnits(resData))
                 })
