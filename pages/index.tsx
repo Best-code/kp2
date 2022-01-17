@@ -27,7 +27,7 @@ const Home: NextPage = () => {
         </p>
       </div>
       <div className="mx-auto">
-        <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script async src="http://platform.twitter.com/widgets.js" charSet="utf-8"></script>
         <a className="twitter-timeline" href="https://twitter.com/Chemteach84" data-tweet-limit='1' data-width="399" ></a>
       </div>
   </div>
