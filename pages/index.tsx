@@ -14,7 +14,13 @@ const Home: NextPage = () => {
           <br />
           This will be an exciting and challenging time as we work together to investigate science and the world around us.
 
-          Attached to this website is my syllabus, notes, video lectures, calendar, and assignments. I will try to keep it updated as often as possible. If you have any questions or concerns feel free to contact me at brandy.kilpatrick@stjohns.k12.fl.us . On the right hand side you will find a link to help with troubleshooting for with playposit and also a link to make appts with me to ask questions or get guidance if needed.
+          Attached to this website is my syllabus, notes, video lectures, calendar, and assignments.
+           I will try to keep it updated as often as possible. If you have any questions or concerns
+            feel free to contact me at &nbsp;
+            <a href='mailto:brandy.kilpatrick@stjohns.k12.fl.us' className="underline">
+            brandy.kilpatrick@stjohns.k12.fl.us 
+            </a>
+             . On the right hand side you will find a link to help with troubleshooting for with playposit and also a link to make appts with me to ask questions or get guidance if needed.
           <br />
           <br />
           Sincerely,
