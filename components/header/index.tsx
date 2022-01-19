@@ -44,7 +44,7 @@ export const Header = () => {
         <div className="ml-4 flex items-center md:ml-6">
           <button
             type="button"
-            className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            className="p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           >
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -55,14 +55,14 @@ export const Header = () => {
     } else {
       return (
         <div className="hidden md:block">
-          <button onClick={() => signIn()} className="text-gray-300 hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</button>
+          <button onClick={() => signIn()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</button>
         </div>)
     }
   }
 
   return (
     <div className="min-h-full">
-      <Disclosure as="nav" className="bg-gray-700">
+      <Disclosure as="nav" className="bg-indigo-700">
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,8 +80,8 @@ export const Header = () => {
                             className={classNames(
                               item.current
                                 ? 'bg-gray-900 text-white'
-                                : 'text-gray-300 hover:bg-gray-800 hover:text-white',
-                              'px-3 py-2 rounded-md text-sm font-medium'
+                                : 'text-gray-300 hover:bg-indigo-800 hover:text-white',
+                              'px-3 py-2 rounded-md text-sm font-medium hover:shadow'
                             )}
                             aria-current={item.current ? 'page' : undefined}
                           >
@@ -95,7 +95,7 @@ export const Header = () => {
                 {LoggedInStuff()}
                 <div className="-mr-2 flex md:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                  <Disclosure.Button className="bg-indigo-700 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -115,7 +115,7 @@ export const Header = () => {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-indigo-800 hover:text-white',
                       'block px-3 py-2 rounded-md text-base font-medium'
                     )}
                     aria-current={item.current ? 'page' : undefined}

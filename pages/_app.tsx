@@ -13,7 +13,9 @@ function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Header />
+    <div className="">
     <Component {...pageProps} />
+    </div>
     <Foot />
   </SessionProvider>
 }

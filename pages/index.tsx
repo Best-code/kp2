@@ -2,13 +2,15 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
 
+
+
   return <div className="lg:flex">
     <div className="flex flex-col px-8 items-center py-4">
       <h1 className="text-center text-4xl font-bold py-2">
         Welcome to Mrs. Kilpatricks Science Webite
       </h1>
       <div className="flex lg:w-4/5 justify-center items-center">
-        <p className="text-center text-3xl font-semibold pt-2 pb-16">
+        <p className="text-left text-2xl font-semibold pt-2 pb-16">
           Dear Parents and Students,
           <br />
           <br />

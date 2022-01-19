@@ -1,10 +1,8 @@
 export const Foot = () => {
     return <div className="fixed bottom-0">
-        <div className="bg-primary-kp w-screen">
+        <div className="bg-indigo-700 w-screen">
             <div className="flex justify-center items-center">
-                <div className="text-left">
-                    <p className="py-4 font-bold text-2xl">Copyight Colin Maloney</p>
-                </div>
+                <p className="py-4 font-bold text-2xl text-white">Copyright Colin Maloney</p>
             </div>
         </div>
     </div>

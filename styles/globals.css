@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+        --primary-kp: #374151,
+        --secondary-kp: #3f3751,
+        --ternary-kp: #375147,
+}
+
 html,
 body {
   padding: 0;

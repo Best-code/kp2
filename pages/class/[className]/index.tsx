@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Unit } from "@prisma/client";
-import UnitComponent from "../../components/unit";
+import UnitComponent from "../../../components/unit";
 import { useState, useEffect } from "react"
 
 const Class = () => {
@@ -26,8 +26,11 @@ const Class = () => {
     })
 
     return <div>
-        <div className="bg-red-900">
-            {units.map((unit) => 
+        <h1 className="text-center text-4xl font-bold py-2">
+            Welcome to {className}
+        </h1>
+        <div className="flex justify-center items-center p-4">
+            {units.map((unit) =>
                 <UnitComponent key={unit.id} name={unit.name} />
             )}
         </div>
