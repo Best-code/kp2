@@ -15,12 +15,12 @@ interface ClassInt {
 
 export const ClassCard = (props: ClassInt) => {
   return (
-    <div key={props.key} className="mx-auto">
-      <Card sx={{ maxWidth: 345 }}>
+    <div key={props.key} className="mx-auto px-2 py-2">
+      <Card sx={{ maxWidth: 345}} className="">
         <Link href={`/class/${props.name}`}>
           <CardActionArea>
-            <CardMedia
-              component="img"
+            <CardMedia className="h-48"
+              component="img" 
               height="140"
               src={props.image}
               alt={props.name}
@@ -29,9 +29,9 @@ export const ClassCard = (props: ClassInt) => {
               <Typography gutterBottom variant="h5" component="div">
                 {props.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {props.def}
-              </Typography>
+              <p className="text-sm text-gray-500 h-20 overflow-scroll">
+              {props.def}
+              </p>
             </CardContent>
           </CardActionArea>
         </Link>

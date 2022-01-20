@@ -1,14 +1,21 @@
 interface UnitInt {
+    class: String
     name: String
     key: number
 }
 
+import Link from "next/link"
+
 export const UnitComponent = (props: UnitInt) => {
-    return <div className="shadow-lg w-2/3" key={props.key}>
-        <div className="p-4 text-2xl font-semibold">
-            {props.name}
+    return <div>
+        <Link href={`/class/${props.class}/${props.name}`}>
+        <div className="flex hover:cursor-pointer shadow-lg" key={props.key}>
+            <div className="p-4 text-2xl font-semibold">
+                {props.name}
+            </div>
         </div>
-    </div>
+    </Link>
+        </div>
 }
 
 export default UnitComponent;
