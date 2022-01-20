@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import Foot from '../components/footer'
 import Header from '../components/header'
 import { SessionProvider } from "next-auth/react"
 
@@ -14,7 +13,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </Head>
     <Header />
     <Component {...pageProps} />
-    <Foot />
   </SessionProvider>
 }
 

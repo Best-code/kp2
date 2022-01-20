@@ -96,7 +96,7 @@ const Class = () => {
     }
   })
 
-  return <div className="py-2">
+  return <div className="py-6">
     <h1 className="text-center text-4xl font-bold">
       Unit {unitName}
     </h1>
