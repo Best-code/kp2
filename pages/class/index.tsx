@@ -19,7 +19,7 @@ export const ClassesPage: NextPage = () => {
       <h1 className="w-screen flex text-4xl font-bold items-center justify-center">
         Classes
       </h1>
-      <div className="flex flex-col md:flex-row justify-center items-center lg:px-24 md:px-12 py-6">
+      <div className="grid xl:grid-cols-3 grid-cols-2 justify-center items-center lg:px-24 md:px-12 py-6">
         {courses.map((course) =>
           <ClassCard key={course.id} name={course.name} def={course.def} image={course.image} />
         )}

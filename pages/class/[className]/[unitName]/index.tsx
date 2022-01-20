@@ -71,9 +71,13 @@ const Class = () => {
       }
     } else {
       return (
-        <div>
-          Nothing to see here
-        </div>
+      <div className="flex justify-center items-center h-screen">
+                <div className="flex h-1/2 font-bold text-4xl">
+                    <div>
+                        Nothing To See Here
+                    </div>
+                </div>
+            </div>
       )
     }
   }
