@@ -1,5 +1,5 @@
 interface UnitInt {
-    class: String
+    class: String | undefined | string[];
     name: String
     key: number
 }

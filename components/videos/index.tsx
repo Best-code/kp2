@@ -1,7 +1,7 @@
 interface UnitInt {
     link: String
     name: String
-    key: Number
+    key: number
 }
 
 import Link from "next/link"

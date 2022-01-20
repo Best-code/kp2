@@ -1,6 +1,6 @@
 interface UnitInt {
     name: String
-    key: Number
+    key: number
 }
 
 export const HandoutComponent = (props: UnitInt) => {
