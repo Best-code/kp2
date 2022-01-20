@@ -5,7 +5,7 @@ import Foot from '../components/footer'
 import Header from '../components/header'
 import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return <SessionProvider session={session}>
     <Head>
       <title>Mrs. Kilpatricks Awesome Website</title>
@@ -13,9 +13,7 @@ function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Header />
-    <div className="">
     <Component {...pageProps} />
-    </div>
     <Foot />
   </SessionProvider>
 }

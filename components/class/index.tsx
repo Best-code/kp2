@@ -15,7 +15,7 @@ interface ClassInt {
 
 export const ClassCard = (props: ClassInt) => {
   return (
-    <div key={props.key} className="mx-auto px-2 py-2">
+    <div key={props.key} className="mx-auto px-2">
       <Card sx={{ maxWidth: 345}} className="">
         <Link href={`/class/${props.name}`}>
           <CardActionArea>

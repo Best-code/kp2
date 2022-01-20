@@ -36,7 +36,7 @@ const Home: NextPage = () => {
       </div>
     </div>
       <div className="flex w-screen justify-center overflow-scroll h-screen ">
-        <script async src="http://platform.twitter.com/widgets.js" charSet="utf-8"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
         <a className="flex twitter-timeline" href="https://twitter.com/Chemteach84" data-width="399" ></a>
     </div>
   </div>
