@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import ClassCard from '../../components/class'
 import { Class } from '@prisma/client'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export const ClassesPage: NextPage = () => {
+
+  const { data: session } = useSession();
 
   const [courses, setCourses] = useState<Class[]>([]);
   useEffect(() => {
@@ -13,6 +19,19 @@ export const ClassesPage: NextPage = () => {
         .then(res => setCourses(res))
     }
   })
+
+  const router = useRouter();
+  const addCourseButton = () => {
+    if (session) {
+      return (
+          <div className="grid place-content-center ">
+            <button onClick={() => router.push('/class/createClass')}>
+              <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
+            </button>
+        </div>
+      )
+    }
+  }
 
   const displayCourses = () => {
     if (courses.length > 0) {
@@ -38,6 +57,7 @@ export const ClassesPage: NextPage = () => {
         Classes
       </h1>
       {displayCourses()}
+      {addCourseButton()}
     </div>
   )
 }

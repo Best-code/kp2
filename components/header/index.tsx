@@ -16,14 +16,13 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-const navigation = [
+let navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Calendar', href: `https://calendar.google.com/calendar/u/0/embed?src=bthomas21@gmail.com&ctz=America/New_York&pli=1`, current: false },
   { name: 'Classes', href: '/class', current: false },
   { name: 'Contact Me', href: 'mailto:brandy.kilpatrick@stjohns.k12.fl.us', current: false },
   { name: 'Extra Practice', href: 'https://www.sciencegeek.net/Chemistry/taters/directory.shtml', current: false },
   { name: 'Forgot Password', href: '#', current: false },
-  { name: 'Sign In', href: '/api/auth/signin/google', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -40,6 +39,9 @@ export const Header = () => {
 
   const LoggedInStuff = () => {
     if (session) {
+      if (navigation.length == 6) {
+        navigation = [...navigation, { name: 'Sign Out', href: '/api/auth/signout/google', current: false },]
+      }
       return <div className="hidden md:block">
         <div className="ml-4 flex items-center md:ml-6">
           <button
@@ -48,15 +50,22 @@ export const Header = () => {
           >
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
+            <div className="hidden md:block">
+              <button onClick={() => signOut()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Out</button>
+            </div>
           </button>
 
         </div>
       </div>
     } else {
+      if (navigation.length == 6) {
+        navigation = [...navigation, { name: 'Sign In', href: '/api/auth/signin/google', current: false },]
+      }
       return (
         <div className="hidden md:block">
           <button onClick={() => signIn()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</button>
-        </div>)
+        </div>
+      )
     }
   }
 
@@ -73,21 +82,21 @@ export const Header = () => {
                   </Link>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.filter(x => x.name != "Sign In").map((item) =>(
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
-                              item.current
-                                ? 'bg-gray-900 text-white'
-                                : 'text-gray-300 hover:bg-indigo-800 hover:text-white',
-                              'px-3 py-2 rounded-md text-sm font-medium hover:shadow'
-                            )}
-                            aria-current={item.current ? 'page' : undefined}
-                          >
-                            {item.name}
-                          </a>
-                        ))}
+                      {navigation.filter(x => x.name != "Sign In").map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? 'bg-gray-900 text-white'
+                              : 'text-gray-300 hover:bg-indigo-800 hover:text-white',
+                            'px-3 py-2 rounded-md text-sm font-medium hover:shadow'
+                          )}
+                          aria-current={item.current ? 'page' : undefined}
+                        >
+                          {item.name}
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>
