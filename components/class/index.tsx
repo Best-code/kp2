@@ -22,7 +22,7 @@ export const ClassCard = (props: ClassInt) => {
             <CardMedia className="h-48"
               component="img" 
               height="140"
-              src={props.image}
+              src={`https://ysbyzygo.sirv.com/kp2/`+props.image}
               alt={props.name}
             />
             <CardContent>

@@ -3,7 +3,8 @@ import { prisma } from "../../../db";
 import { getSession } from "next-auth/react";
 
 const CreateClass = async (req : NextApiRequest, res : NextApiResponse) => {
-    const {name, def ,image} = req.body;
+    let {name, def ,image} = req.body;
+    name = name.substr(name.lastIndexOf("/")+1)
     const Session = await getSession({req})
     if(Session){
         const Class = await prisma.class.create({
