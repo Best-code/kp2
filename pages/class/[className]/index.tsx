@@ -2,6 +2,9 @@ import { useRouter } from "next/router";
 import { Unit } from "@prisma/client";
 import { useState, useEffect } from "react"
 import UnitComponent from "../../../components/unit";
+import { useSession } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Class = () => {
 
@@ -31,6 +34,19 @@ const Class = () => {
         }
     }
 
+    const { data: session } = useSession();
+    const addUnitButton = () => {
+        if (session) {
+            return (
+                <div className="grid place-content-center ">
+                    <button onClick={() => router.push(`/class/${className}/createClass`)}>
+                        <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
+                    </button>
+                </div>
+            )
+        }
+    }
+
     const router = useRouter();
     const { className } = router.query;
     useEffect(() => {
@@ -52,6 +68,9 @@ const Class = () => {
         </h1>
         <div>
             {displayUnits()}
+            <div className="mt-6">
+                {addUnitButton()}
+            </div>
         </div>
     </div>
 }

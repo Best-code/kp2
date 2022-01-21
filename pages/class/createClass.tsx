@@ -7,17 +7,15 @@ const CreateClassForm = () => {
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
 
-    const HandleSubmit = () => {
-
-
+    const HandleSubmit = (e : any) => {
+        e.preventDefault();
         /*
         curl --request POST \
         --url 'https://api.sirv.com/v2/files/upload?filename=%2Fpath%2Fto%2Fuploaded-image.jpg' \
         --header 'authorization: Bearer BEARER_TOKEN_HERE' \
         --header 'content-type: image/jpeg'  \
         --data "@/path/to/local-file.jpg"
-        */
-
+        
         const [bearer, setBearer] = useState("")
         fetch(`https://api.sirv.com/v2/files/upload?filename=%2Fpath%2Fto%2Fuploaded-image.jpg`, {
             headers: {
@@ -26,7 +24,8 @@ const CreateClassForm = () => {
             },
             body : `${image}`
         })
-
+        */
+        
         fetch(`/api/classes/create`, {
             body: JSON.stringify({
                 name: name,
@@ -38,13 +37,15 @@ const CreateClassForm = () => {
             },
             method: "POST"
         })
+
+        router.push(`/class`)
     }
 
     const router = useRouter();
     const { data: session } = useSession()
 
     useEffect(() => {
-        if (session) {
+        if (!session) {
             router.push("/")
         }
         console.log(image)

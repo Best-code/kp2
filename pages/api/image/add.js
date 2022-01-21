@@ -1,5 +1,6 @@
 import { request } from "http";
 import fs from "fs"
+
 fs.readFile('/path/to/local-file.jpg', (err, data) => {
  if (err) throw err;
 
