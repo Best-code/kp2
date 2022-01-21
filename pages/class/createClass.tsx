@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react"
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
-const createClassForm = () => {
+const CreateClassForm = () => {
     const [name, setName] = useState("")
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
 
-    const handleSubmit = () => {
+    const HandleSubmit = () => {
 
 
         /*
@@ -131,7 +131,7 @@ const createClassForm = () => {
                                 </div>
                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                     <button
-                                        onClick={handleSubmit}
+                                        onClick={HandleSubmit}
                                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         Save
@@ -146,4 +146,4 @@ const createClassForm = () => {
     )
 }
 
-export default createClassForm;
+export default CreateClassForm;
