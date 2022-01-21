@@ -24,10 +24,10 @@ export const ClassesPage: NextPage = () => {
   const addCourseButton = () => {
     if (session) {
       return (
-          <div className="grid place-content-center ">
-            <button onClick={() => router.push('/class/createClass')}>
-              <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
-            </button>
+        <div className="grid place-content-center ">
+          <button onClick={() => router.push('/class/createClass')}>
+            <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
+          </button>
         </div>
       )
     }
