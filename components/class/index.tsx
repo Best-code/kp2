@@ -15,11 +15,11 @@ interface ClassInt {
   def: string
   image: string
   key: number
+  isAdmin: boolean
 }
 
 
 export const ClassCard = (props: ClassInt) => {
-  const { data: session } = useSession()
   const router = useRouter();
   const HandleDelete = () => {
     fetch(`/api/delete/class`, {
@@ -35,11 +35,9 @@ export const ClassCard = (props: ClassInt) => {
   }
 
   const DeleteClass = () => {
-    if (session) {
       return <div className="flex justify-end items-end w-full">
         <FontAwesomeIcon className="w-8 h-8 hover:cursor-pointer hover:w-16 hover:h-16" onClick={HandleDelete} icon={faTrashCan} />
       </div>
-    } return <></>
   }
 
   return (
@@ -67,7 +65,7 @@ export const ClassCard = (props: ClassInt) => {
           <Button size="small" color="primary">
             Share
           </Button>
-          {DeleteClass()}
+          {props.isAdmin && DeleteClass()}
         </CardActions>
       </Card>
     </div>

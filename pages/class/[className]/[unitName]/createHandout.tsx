@@ -1,30 +1,20 @@
 import { useEffect, useState } from "react";
 import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import IsAdmin from "../../../../helpers/IsAdmin";
 
-const CreateHandoutForm = () => {
+const CreateHandoutForm = ({ unitName, className, unitId, isAdmin } : any) => {
     const [name, setName] = useState("")
-    const [unitId, setUnitId] = useState("")
-    const {data:session, status} = useSession();
 
     const router = useRouter();
-    const { className, unitName } = router.query;
-    useEffect(() => {
-        if (unitName) {
-            fetch(`/api/units/name?name=${unitName}`)
-                .then((res) => res.json())
-                .then((resData) => {
-                    setUnitId(resData)
-                })
-        }
-    })
 
     const HandleSubmit = (e: any) => {
         e.preventDefault();
         fetch(`/api/create/handout`, {
             body: JSON.stringify({
-                name: name,
-                unitId: unitId,
+                name,
+                unitId
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -37,7 +27,7 @@ const CreateHandoutForm = () => {
 
     return (
         <>
-            {session && (
+            {isAdmin && (
                 <div>
                     <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="mt-5 md:mt-0 md:col-span-2">
@@ -82,10 +72,15 @@ const CreateHandoutForm = () => {
 
 export default CreateHandoutForm;
 
-export async function getServerSideProps({ req }: any) {
-    const session = await getSession({ req })
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getSession(context)
 
-    if (!session) {
+    const { unitName, className } = context.query;
+    const unitIdRes = await fetch(`http://localhost:3000/api/units/name?name=${unitName}`)
+    const unitId = await unitIdRes.json()
+
+    const isAdmin = await IsAdmin(session)
+    if (!isAdmin) {
         return {
             redirect: {
                 destination: "/api/auth/signin",
@@ -95,7 +90,6 @@ export async function getServerSideProps({ req }: any) {
     }
 
     return {
-        props: {}
+        props: { isAdmin, unitId, className, unitName }
     }
-
 }

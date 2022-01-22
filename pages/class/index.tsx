@@ -1,38 +1,16 @@
-import { useState, useEffect } from 'react'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import ClassCard from '../../components/class'
 import { Class } from '@prisma/client'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { Session } from 'next-auth'
+import IsAdmin from '../../helpers/IsAdmin'
 
-export const ClassesPage: NextPage = () => {
-
-  const { data: session } = useSession();
-  const [admin, setAdmin] = useState(false)
-
-  const IsAdmin = (Session: Session | null) => {
-    if (Session && Session.user) {
-      const check = fetch(`/api/admin?email=${Session.user.email}`).then(res => res.json()).then(resData => setAdmin(resData))
-    }
-    return admin 
-  }
-
-  const [courses, setCourses] = useState<Class[]>([]);
-  useEffect(() => {
-    if (courses.length == 0) {
-      fetch('/api/classes')
-        .then((res) => res.json())
-        .then(res => setCourses(res))
-    }
-  })
-
-
+export const ClassesPage: NextPage = ({ courses, isAdmin } : any) => {
   const router = useRouter();
   const addCourseButton = () => {
-    if (IsAdmin(session)) {
+    if (isAdmin) {
       return (
         <div className="grid place-content-center ">
           <button onClick={() => router.push('/class/createClass')}>
@@ -46,8 +24,8 @@ export const ClassesPage: NextPage = () => {
   const displayCourses = () => {
     if (courses.length > 0) {
       return <div className="grid xl:grid-cols-3 grid-cols-2 justify-center items-center lg:px-24 md:px-12 py-6">
-        {courses.map((course) =>
-          <ClassCard key={course.id} name={course.name} def={course.def} image={course.image} />
+        {courses.map((course: Class) =>
+          <ClassCard key={course.id} name={course.name} def={course.def} image={course.image} isAdmin={isAdmin} />
         )}
       </div>
     } else {
@@ -73,3 +51,17 @@ export const ClassesPage: NextPage = () => {
 }
 
 export default ClassesPage;
+
+export const getServerSideProps : GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  const classesRes = await fetch('http://localhost:3000/api/classes')
+  const courses = await classesRes.json()
+
+  const isAdmin = await IsAdmin(session)
+
+  return {
+    props:
+      { courses, isAdmin }
+  }
+}

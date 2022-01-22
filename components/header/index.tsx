@@ -7,6 +7,7 @@ import { faAtom, faFlask } from '@fortawesome/free-solid-svg-icons'
 import { signIn, signOut, useSession } from "next-auth/react"
 import Link from 'next/link'
 
+
 let navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Calendar', href: `https://calendar.google.com/calendar/u/0/embed?src=bthomas21@gmail.com&ctz=America/New_York&pli=1`, current: false },
@@ -83,6 +84,7 @@ export const Header = () => {
                           {item.name}
                         </a>
                       ))}
+                      {session && session.user && session.user.email}
                     </div>
                   </div>
                 </div>

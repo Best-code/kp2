@@ -1,14 +1,12 @@
-import { useRouter } from "next/router";
-import { Unit } from "@prisma/client";
-import { useState, useEffect } from "react"
 import UnitComponent from "../../../components/unit";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { Unit } from "@prisma/client";
+import { GetServerSideProps } from "next";
+import IsAdmin from "../../../helpers/IsAdmin";
 
-const Class = () => {
-    const [units, setUnits] = useState<Unit[]>([]);
-
+const Class = ({ classInfo, units, isAdmin } : any) => {
     const displayUnits = () => {
         if (units.length > 0) {
             return <div className="flex-col flex justify-center items-center">
@@ -16,8 +14,8 @@ const Class = () => {
                     Units
                 </h1>
                 <div className="w-2/3">
-                    {units.map((unit) =>
-                        <UnitComponent class={className} key={unit.id} name={unit.name} />
+                    {units.map((unit : Unit) =>
+                        <UnitComponent class={classInfo.name} key={unit.id} name={unit.name} />
                     )}
                 </div>
             </div>
@@ -32,44 +30,44 @@ const Class = () => {
         }
     }
 
-    const { data: session } = useSession();
     const addUnitButton = () => {
-        if (session) {
             return (
                 <div className="grid place-content-center ">
-                    <button onClick={() => router.push(`/class/${className}/createUnit`)}>
+                    <a href={`/class/${classInfo.name}/createUnit`}>
                         <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
-                    </button>
+                    </a>
                 </div>
             )
-        }
     }
-
-    const router = useRouter();
-    const { className } = router.query;
-    useEffect(() => {
-        if (className && units.length == 0) {
-            fetch(`/api/classes/class?name=${className}`)
-                .then((res) => res.json())
-                .then((resData) => {
-                    const units = fetch(`/api/classes/units/?classId=${resData.id}`)
-                        .then((res) => res.json())
-                        .then((resData) => setUnits(resData))
-                })
-        }
-    })
 
     return <div>
         <h1 className="text-center text-4xl font-bold py-6">
-            Welcome to {className}
+            Welcome to {classInfo.name}
         </h1>
         <div>
             {displayUnits()}
             <div className="mt-6">
-                {addUnitButton()}
+                {isAdmin && addUnitButton()}
             </div>
         </div>
     </div>
 }
 
 export default Class;
+
+export const getServerSideProps : GetServerSideProps = async (context) => {
+    const session = await getSession(context)
+
+    const {className} = context.query;
+    const classInfoRes = await fetch(`http://localhost:3000/api/classes/class?name=${className}`)
+    const classInfo = await classInfoRes.json()
+    const unitsRes = await fetch(`http://localhost:3000/api/classes/units/?classId=${classInfo.id}`)
+    const units = await unitsRes.json()
+
+    const isAdmin = await IsAdmin(session)
+
+    return {
+        props:
+            { units, isAdmin, classInfo}
+    }
+}

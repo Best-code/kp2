@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
-import { getSession, useSession } from "next-auth/react"
+import { useState } from "react";
+import { getSession } from "next-auth/react"
 import { useRouter } from "next/router";
-import { Role } from "@prisma/client";
-import { Session } from "next-auth"
+import IsAdmin from "../../helpers/IsAdmin";
+import { GetServerSideProps } from "next";
 
-
-const CreateClassForm = () => {
-
-    const [admin, setAdmin] = useState(false)
-    const IsAdmin = (Session: Session | null) => {
-        if (Session && Session.user) {
-            const check = fetch(`/api/admin?email=${Session.user.email}`).then(res => res.json()).then(resData => setAdmin(resData))
-        }
-        return admin
-    }
+const CreateClassForm = ({ isAdmin } : any) => {
     const [name, setName] = useState("")
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
-    const { data: session, status } = useSession()
 
     const HandleSubmit = (e: any) => {
         e.preventDefault();
@@ -38,12 +28,11 @@ const CreateClassForm = () => {
             body : `${image}`
         })
         */
-
         fetch(`/api/create/class`, {
             body: JSON.stringify({
-                name: name,
-                def: def,
-                image: image
+                name,
+                def,
+                image
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -58,7 +47,7 @@ const CreateClassForm = () => {
 
     return (
         <>
-            {IsAdmin(session) && (
+            {isAdmin && (
                 <div>
                     <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="mt-5 md:mt-0 md:col-span-2">
@@ -156,21 +145,21 @@ const CreateClassForm = () => {
 
 export default CreateClassForm;
 
-export async function getServerSideProps({ req }: any) {
-    const session = await getSession({ req })
+export const getServerSideProps : GetServerSideProps = async (context) => {
+    const session = await getSession(context)
 
-    if (!session) {
+    const isAdmin = await IsAdmin(session)
+    if (!isAdmin) {
         return {
             redirect: {
-                destination: "/api/auth/signin",
+                destination: "/class",
                 permanent: false
             }
         }
     }
-
-    console.log(session.user)
+    
     return {
-        props: {}
+        props: { isAdmin }
     }
 
 }

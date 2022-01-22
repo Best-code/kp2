@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import IsAdmin from "../../../helpers/IsAdmin";
 
-const CreateUnitForm = () => {
+const CreateUnitForm = ({ isAdmin, classInfo } :any) => {
     const [name, setName] = useState("")
-    const [classId, setClassId] = useState("")
-    const {data:session, status} = useSession();
+    const { data: session, status } = useSession();
 
     const router = useRouter();
-    const { className } = router.query;
-    useEffect(() => {
-        if (className) {
-            fetch(`/api/classes/class?name=${className}`)
-                .then((res) => res.json())
-                .then((resData) => {
-                    setClassId(resData.id)
-                })
-        }
-    })
 
     const HandleSubmit = (e: any) => {
         e.preventDefault();
         fetch(`/api/create/unit`, {
             body: JSON.stringify({
-                name: name,
-                classId: classId,
+                name,
+                classId: classInfo.id,
                 handouts: {},
                 videos: {}
             }),
@@ -34,12 +25,12 @@ const CreateUnitForm = () => {
             method: "POST"
         })
 
-        router.push(`/class/${className}`)
+        router.push(`/class/${classInfo.name}`)
     }
 
     return (
         <>
-            {session && (
+            {isAdmin && (
                 <div>
                     <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="mt-5 md:mt-0 md:col-span-2">
@@ -84,21 +75,22 @@ const CreateUnitForm = () => {
 
 export default CreateUnitForm;
 
-export async function getServerSideProps({ req }: any) {
-    const session = await getSession({ req })
+export const getServerSideProps : GetServerSideProps = async (context) => {
+    const session = await getSession(context)
 
-    if (!session) {
+    const {className} = context.query
+    const isAdmin = await IsAdmin(session)
+    if (!isAdmin) {
         return {
             redirect: {
-                destination: "/api/auth/signin",
+                destination: `/class/${className}`,
                 permanent: false
             }
         }
     }
-
+    
     return {
-        props: {
-        }
+        props: { isAdmin }
     }
 
 }
