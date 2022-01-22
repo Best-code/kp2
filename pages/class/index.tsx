@@ -6,10 +6,19 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { Session } from 'next-auth'
 
 export const ClassesPage: NextPage = () => {
 
   const { data: session } = useSession();
+  const [admin, setAdmin] = useState(false)
+
+  const IsAdmin = (Session: Session | null) => {
+    if (Session && Session.user) {
+      const check = fetch(`/api/admin?email=${Session.user.email}`).then(res => res.json()).then(resData => setAdmin(resData))
+    }
+    return admin 
+  }
 
   const [courses, setCourses] = useState<Class[]>([]);
   useEffect(() => {
@@ -20,9 +29,10 @@ export const ClassesPage: NextPage = () => {
     }
   })
 
+
   const router = useRouter();
   const addCourseButton = () => {
-    if (session) {
+    if (IsAdmin(session)) {
       return (
         <div className="grid place-content-center ">
           <button onClick={() => router.push('/class/createClass')}>

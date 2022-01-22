@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 
-const CreateUnitForm = ({session} : any) => {
+const CreateUnitForm = () => {
     const [name, setName] = useState("")
     const [classId, setClassId] = useState("")
+    const {data:session, status} = useSession();
 
     const router = useRouter();
     const { className } = router.query;
@@ -97,7 +98,6 @@ export async function getServerSideProps({ req }: any) {
 
     return {
         props: {
-            session,
         }
     }
 

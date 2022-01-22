@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Header from '../components/header'
 import { SessionProvider } from "next-auth/react"
 
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return <SessionProvider session={session}>
     <Head>
@@ -13,7 +14,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </Head>
     <Header />
     <Component {...pageProps} />
-  </SessionProvider>
+    </SessionProvider>
 }
 
 export default MyApp

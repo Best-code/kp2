@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { getSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import { Role } from "@prisma/client";
+import { Session } from "next-auth"
 
-const CreateClassForm = ({ session } : any) => {
+
+const CreateClassForm = () => {
+
+    const [admin, setAdmin] = useState(false)
+    const IsAdmin = (Session: Session | null) => {
+        if (Session && Session.user) {
+            const check = fetch(`/api/admin?email=${Session.user.email}`).then(res => res.json()).then(resData => setAdmin(resData))
+        }
+        return admin
+    }
     const [name, setName] = useState("")
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
+    const { data: session, status } = useSession()
 
     const HandleSubmit = (e: any) => {
         e.preventDefault();
@@ -47,7 +58,7 @@ const CreateClassForm = ({ session } : any) => {
 
     return (
         <>
-            {session && (
+            {IsAdmin(session) && (
                 <div>
                     <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="mt-5 md:mt-0 md:col-span-2">
@@ -145,7 +156,7 @@ const CreateClassForm = ({ session } : any) => {
 
 export default CreateClassForm;
 
-export async function getServerSideProps({ req } : any) {
+export async function getServerSideProps({ req }: any) {
     const session = await getSession({ req })
 
     if (!session) {
@@ -157,10 +168,9 @@ export async function getServerSideProps({ req } : any) {
         }
     }
 
+    console.log(session.user)
     return {
-        props: {
-            session,
-        }
+        props: {}
     }
 
 }

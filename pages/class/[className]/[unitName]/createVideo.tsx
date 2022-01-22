@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { getSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 
-const CreateVideoForm = ({session} : any) => {
+const CreateVideoForm = () => {
     const [name, setName] = useState("")
     const [link, setLink] = useState("")
     const [unitId, setUnitId] = useState("")
+    const {data:session, status} = useSession();
 
     const router = useRouter();
     const { className, unitName } = router.query;
@@ -111,9 +112,7 @@ export async function getServerSideProps({ req }: any) {
     }
 
     return {
-        props: {
-            session,
-        }
+        props: {}
     }
 
 }
