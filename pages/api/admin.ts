@@ -9,7 +9,7 @@ const ApiAdmin = async (req : NextApiRequest, res : NextApiResponse) => {
     if(Session){  
         const admin = await prisma.user.findFirst({
             where:{
-                email: email
+                email: String(email)
             }
         })
         res.json(admin.role == Role.ADMIN)
