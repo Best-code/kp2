@@ -6,16 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAtom, faFlask } from '@fortawesome/free-solid-svg-icons'
 import { signIn, signOut, useSession } from "next-auth/react"
 import Link from 'next/link'
-import Units from '../../pages/api/units'
-import Image from 'next/image'
-import { Session } from 'next-auth'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 let navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Calendar', href: `https://calendar.google.com/calendar/u/0/embed?src=bthomas21@gmail.com&ctz=America/New_York&pli=1`, current: false },
@@ -23,6 +14,7 @@ let navigation = [
   { name: 'Contact Me', href: 'mailto:brandy.kilpatrick@stjohns.k12.fl.us', current: false },
   { name: 'Extra Practice', href: 'https://www.sciencegeek.net/Chemistry/taters/directory.shtml', current: false },
   { name: 'Forgot Password', href: '#', current: false },
+  { name: "", href: '#', current: false }
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -39,9 +31,7 @@ export const Header = () => {
 
   const LoggedInStuff = () => {
     if (session) {
-      if (navigation.length == 6) {
-        navigation = [...navigation, { name: 'Sign Out', href: '/api/auth/signout/google', current: false },]
-      }
+      navigation[6] = { name: 'Sign Out', href: '/api/auth/signout/google', current: false }
       return <div className="hidden md:block">
         <div className="ml-4 flex items-center md:ml-6">
           <button
@@ -49,7 +39,6 @@ export const Header = () => {
             className="p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           >
             <span className="sr-only">View notifications</span>
-            <BellIcon className="h-6 w-6" aria-hidden="true" />
             <div className="hidden md:block">
               <button onClick={() => signOut()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Out</button>
             </div>
@@ -58,9 +47,7 @@ export const Header = () => {
         </div>
       </div>
     } else {
-      if (navigation.length == 6) {
-        navigation = [...navigation, { name: 'Sign In', href: '/api/auth/signin/google', current: false },]
-      }
+      navigation[6] = { name: 'Sign In', href: '/api/auth/signin/google', current: false }
       return (
         <div className="hidden md:block">
           <button onClick={() => signIn()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</button>
@@ -68,7 +55,6 @@ export const Header = () => {
       )
     }
   }
-
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-indigo-700">
@@ -82,7 +68,7 @@ export const Header = () => {
                   </Link>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.filter(x => x.name != "Sign In").map((item) => (
+                      {navigation.filter(x => x.name != "Sign In").filter(x => x.name != 'Sign Out').map((item) => (
                         <a
                           key={item.name}
                           href={item.href}

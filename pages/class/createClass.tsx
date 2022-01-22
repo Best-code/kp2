@@ -9,6 +9,7 @@ const CreateClassForm = () => {
 
     const HandleSubmit = (e : any) => {
         e.preventDefault();
+
         /*
         curl --request POST \
         --url 'https://api.sirv.com/v2/files/upload?filename=%2Fpath%2Fto%2Fuploaded-image.jpg' \
@@ -26,7 +27,7 @@ const CreateClassForm = () => {
         })
         */
         
-        fetch(`/api/classes/create`, {
+        fetch(`/api/create/class`, {
             body: JSON.stringify({
                 name: name,
                 def: def,

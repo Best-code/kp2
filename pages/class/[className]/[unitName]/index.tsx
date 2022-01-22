@@ -3,7 +3,9 @@ import { Handout, Video } from "@prisma/client";
 import VideoComponent from "../../../../components/videos";
 import { useState, useEffect } from "react"
 import HandoutComponent from "../../../../components/handout";
-import { ClassNames } from "@emotion/react";
+import { useSession } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Class = () => {
 
@@ -37,53 +39,65 @@ const Class = () => {
 
   const VideosAndHandouts = () => {
     if (videos.length > 0 || handouts.length > 0) {
-      if (videos.length == 0) {
-        return <div>
-          <h1 className="flex justify-center items-center text-3xl font-semibold">
-            Handouts
-          </h1>
-          {Handouts()}
-        </div>
-      } else if (handouts.length == 0) {
-        return <div>
-          <h1 className="flex justify-center items-center text-3xl font-semibold">
-            Videos
-          </h1>
-          {Videos()}
-        </div>
-      } else {
-        return (
-          <div className="flex justify-center items-center">
-            <div className="w-1/2 h-screen">
-              <h1 className="flex justify-center items-center text-3xl font-semibold">
-                Handouts
-              </h1>
-              {Handouts()}
-            </div>
-            <div className="w-1/2 h-screen">
-              <h1 className="flex justify-center text-3xl font-semibold">
-                Videos
-              </h1>
-              {Videos()}
-            </div>
+      return (
+        <div className="flex justify-center items-center">
+          <div className="w-1/2 h-screen">
+            <h1 className="flex justify-center items-center text-3xl font-semibold">
+              Handouts
+            </h1>
+            {Handouts()}
+            {AddButton("createHandout")}
           </div>
-        )
-      }
+          <div className="w-1/2 h-screen">
+            <h1 className="flex justify-center text-3xl font-semibold">
+              Videos
+            </h1>
+            {Videos()}
+            {AddButton("createVideo")}
+          </div>
+        </div>
+      )
     } else {
       return (
-      <div className="flex justify-center items-center h-screen">
-                <div className="flex h-1/2 font-bold text-4xl">
-                    <div>
-                        Nothing To See Here
-                    </div>
-                </div>
-            </div>
+        <div className="flex justify-center items-center">
+          <div className="w-1/2 h-screen">
+            <h1 className="flex justify-center items-center text-3xl font-semibold">
+              Handouts
+            </h1>
+            <p className="flex justify-center items-center text-2xl font-semibold py-2">
+            Nothing To See Here
+            </p>
+            {AddButton("createHandout")}
+          </div>
+          <div className="w-1/2 h-screen">
+            <h1 className="flex justify-center text-3xl font-semibold">
+              Videos
+            </h1>
+            <p className="flex justify-center items-center text-2xl font-semibold py-2">
+            Nothing To See Here
+            </p>
+            {AddButton("createVideo")}
+          </div>
+        </div>
+      )
+    }
+  }
+  const router = useRouter();
+  const { unitName, className } = router.query;
+
+  const { data: session } = useSession()
+  const AddButton = (link: string) => {
+    if (session) {
+      return (
+        <div className="grid place-content-center ">
+          <button onClick={() => router.push(`/class/${className}/${unitName}/${link}`)}>
+            <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
+          </button>
+        </div>
       )
     }
   }
 
-  const router = useRouter();
-  const { unitName } = router.query;
   useEffect(() => {
     if (unitName && (handouts.length == 0 && videos.length == 0)) {
       fetch(`/api/units/name?name=${unitName}`)

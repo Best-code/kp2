@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Class = () => {
-
-    const [classNumber, setClassNumber] = useState<Number | undefined>();
     const [units, setUnits] = useState<Unit[]>([]);
 
     const displayUnits = () => {
@@ -24,7 +22,7 @@ const Class = () => {
                 </div>
             </div>
         } else {
-            return <div className="flex justify-center items-center h-screen">
+            return <div className="flex justify-center items-center ">
                 <div className="flex h-1/2 font-bold text-4xl">
                     <div>
                         Nothing To See Here
@@ -39,7 +37,7 @@ const Class = () => {
         if (session) {
             return (
                 <div className="grid place-content-center ">
-                    <button onClick={() => router.push(`/class/${className}/createClass`)}>
+                    <button onClick={() => router.push(`/class/${className}/createUnit`)}>
                         <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
                     </button>
                 </div>
@@ -54,7 +52,6 @@ const Class = () => {
             fetch(`/api/classes/class?name=${className}`)
                 .then((res) => res.json())
                 .then((resData) => {
-                    setClassNumber(resData.id)
                     const units = fetch(`/api/classes/units/?classId=${resData.id}`)
                         .then((res) => res.json())
                         .then((resData) => setUnits(resData))

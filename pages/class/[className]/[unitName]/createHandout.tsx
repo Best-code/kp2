@@ -2,30 +2,28 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 
-const CreateUnitForm = () => {
+const CreateHandoutForm = () => {
     const [name, setName] = useState("")
-    const [classId, setClassId] = useState("")
+    const [unitId, setUnitId] = useState("")
 
     const router = useRouter();
-    const { className } = router.query;
+    const { className, unitName } = router.query;
     useEffect(() => {
-        if (className) {
-            fetch(`/api/classes/class?name=${className}`)
+        if (unitName) {
+            fetch(`/api/units/name?name=${unitName}`)
                 .then((res) => res.json())
                 .then((resData) => {
-                    setClassId(resData.id)
+                    setUnitId(resData)
                 })
         }
     })
 
     const HandleSubmit = (e: any) => {
         e.preventDefault();
-        fetch(`/api/create/unit`, {
+        fetch(`/api/create/handout`, {
             body: JSON.stringify({
                 name: name,
-                classId: classId,
-                handouts: {},
-                videos: {}
+                unitId: unitId,
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -33,17 +31,17 @@ const CreateUnitForm = () => {
             method: "POST"
         })
 
-        router.push(`/class/${className}`)
+        router.push(`/class/${className}/${unitName}`)
     }
 
     const { data: session } = useSession()
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (!session) {
             router.push("/")
         }
-    })
+    })*/
 
     return (
         <>
@@ -56,7 +54,7 @@ const CreateUnitForm = () => {
                                     <div className="grid grid-cols-1 gap-6">
                                         <div className="col-span-3 sm:col-span-2">
                                             <label htmlFor="class-name" className="block text-sm font-medium text-gray-700">
-                                                Unit Name
+                                                Handout Name
                                             </label>
                                             <div className="mt-1 flex rounded-md shadow-sm">
                                                 <input
@@ -65,7 +63,7 @@ const CreateUnitForm = () => {
                                                     name="unit-name"
                                                     id="name"
                                                     className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
-                                                    placeholder="Unit One"
+                                                    placeholder="Worksheet One"
                                                 />
                                             </div>
                                         </div>
@@ -88,4 +86,4 @@ const CreateUnitForm = () => {
     )
 }
 
-export default CreateUnitForm;
+export default CreateHandoutForm;
