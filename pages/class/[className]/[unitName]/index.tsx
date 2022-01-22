@@ -8,7 +8,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
 
-const Class = ({ handouts, videos, isAdmin, unitName, className }) => {
+const Class = ({ handouts, videos, isAdmin, unitName, className } : any) => {
 
   const Handouts = () => {
     return (
