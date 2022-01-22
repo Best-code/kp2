@@ -37,6 +37,17 @@ const Class = () => {
     )
   }
 
+  const NothingHere = (name: Handout[] | Video[]) => {
+    if (name.length == 0) {
+      return (
+      <p className="flex justify-center items-center text-2xl font-semibold py-2">
+        Nothing To See Here
+      </p>)
+    }else{
+      return <div className="w-screen bg-red-900"></div>
+    }
+  }
+
   const VideosAndHandouts = () => {
     if (videos.length > 0 || handouts.length > 0) {
       return (
@@ -45,6 +56,7 @@ const Class = () => {
             <h1 className="flex justify-center items-center text-3xl font-semibold">
               Handouts
             </h1>
+            {NothingHere(handouts)}
             {Handouts()}
             {AddButton("createHandout")}
           </div>
@@ -52,6 +64,7 @@ const Class = () => {
             <h1 className="flex justify-center text-3xl font-semibold">
               Videos
             </h1>
+            {NothingHere(videos)}
             {Videos()}
             {AddButton("createVideo")}
           </div>
@@ -65,7 +78,7 @@ const Class = () => {
               Handouts
             </h1>
             <p className="flex justify-center items-center text-2xl font-semibold py-2">
-            Nothing To See Here
+              Nothing To See Here
             </p>
             {AddButton("createHandout")}
           </div>
@@ -74,7 +87,7 @@ const Class = () => {
               Videos
             </h1>
             <p className="flex justify-center items-center text-2xl font-semibold py-2">
-            Nothing To See Here
+              Nothing To See Here
             </p>
             {AddButton("createVideo")}
           </div>
