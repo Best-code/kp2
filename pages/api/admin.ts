@@ -12,7 +12,8 @@ const ApiAdmin = async (req : NextApiRequest, res : NextApiResponse) => {
                 email: String(email)
             }
         })
-        res.json(admin.role == Role.ADMIN)
+        if(admin)
+            res.json(admin.role == Role.ADMIN)
     }else{
         res.status(401)
     }
