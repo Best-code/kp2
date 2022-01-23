@@ -13,6 +13,7 @@ export default NextAuth({
       authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
     })
   ],
+  secret: process.env.JWT_SECRET_KEY,
   jwt: {
     signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
   },
