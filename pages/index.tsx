@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 
-const Home: NextPage = () => {
+const Home: NextPage = ({widgetLoaded} : any) => {
 
   return <div className="lg:flex">
     <div className="flex flex-col px-8 items-center">
@@ -32,11 +32,20 @@ const Home: NextPage = () => {
         </p>
       </div>
     </div>
-    <div className="flex w-screen justify-center overflow-scroll h-screen">
+    {widgetLoaded && (
+    <div className="flex w-screen justify-center overflow-hidden h-screen">
       <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
       <a className="flex twitter-timeline" href="https://twitter.com/Chemteach84" data-width="399" ></a>
     </div>
+    )}
   </div>
 }
 
 export default Home
+
+
+export const getServerSideProps : GetServerSideProps = async (context) => {
+  const widgetRes = await fetch("https://platform.twitter.com/widgets.js")
+  const widgetLoaded = widgetRes ? true : false;
+  return {props:{widgetLoaded}}
+}

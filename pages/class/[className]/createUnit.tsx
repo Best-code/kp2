@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../helpers/IsAdmin";
 import { serverRoute } from "../../../config";
+import { LoggedInRedirect, LoggedOutRedirect } from "../../../helpers/redirect";
 
-const CreateUnitForm = ({ isAdmin, classInfo } :any) => {
+const CreateUnitForm = ({ isAdmin, classInfo }: any) => {
     const [name, setName] = useState("")
 
     const router = useRouter();
@@ -75,23 +76,20 @@ const CreateUnitForm = ({ isAdmin, classInfo } :any) => {
 
 export default CreateUnitForm;
 
-export const getServerSideProps : GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
-    const {className} = context.query
+    const { className } = context.query
     const classInfoRes = await fetch(`${serverRoute}/api/classes/class?name=${className}`)
     const classInfo = await classInfoRes.json()
-    console.log(classInfo)
+
     const isAdmin = await IsAdmin(session)
-    if (!isAdmin) {
-        return {
-            redirect: {
-                destination: `/class/${className}`,
-                permanent: false
-            }
-        }
+    if (session) {
+        if (!isAdmin) return LoggedInRedirect(`/class/${className}`)
+    } else {
+        return LoggedOutRedirect()
     }
-    
+
     return {
         props: { isAdmin, classInfo }
     }

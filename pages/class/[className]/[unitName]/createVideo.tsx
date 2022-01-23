@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
 import { serverRoute } from "../../../../config";
+import { LoggedInRedirect, LoggedOutRedirect } from "../../../../helpers/redirect";
 
-const CreateVideoForm = ({isAdmin, unitId, unitName, className} : any) => {
+const CreateVideoForm = ({ isAdmin, unitId, unitName, className }: any) => {
     const [name, setName] = useState("")
     const [link, setLink] = useState("")
 
@@ -89,24 +90,22 @@ const CreateVideoForm = ({isAdmin, unitId, unitName, className} : any) => {
 
 export default CreateVideoForm;
 
-export const getServerSideProps : GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
-  const { unitName, className } = context.query;
-  const unitIdRes = await fetch(`${serverRoute}/api/units/name?name=${unitName}`)
-  const unitId = await unitIdRes.json()
+    const { unitName, className } = context.query;
+    const unitIdRes = await fetch(`${serverRoute}/api/units/name?name=${unitName}`)
+    const unitId = await unitIdRes.json()
 
     const isAdmin = await IsAdmin(session)
-    if (!isAdmin) {
-        return {
-            redirect: {
-                destination: "/api/auth/signin",
-                permanent: false
-            }
-        }
+    if (session) {
+        if (!isAdmin) return LoggedInRedirect(`/class/${className}/${unitName}`)
+    } else {
+        return LoggedOutRedirect()
     }
 
+
     return {
-        props: {isAdmin, unitId, className, unitName}
+        props: { isAdmin, unitId, className, unitName }
     }
 }

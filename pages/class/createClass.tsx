@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import IsAdmin from "../../helpers/IsAdmin";
 import { GetServerSideProps } from "next";
+import {LoggedInRedirect, LoggedOutRedirect} from "../../helpers/redirect";
 
 const CreateClassForm = ({ isAdmin }:any) => {
     const [name, setName] = useState("")
@@ -150,13 +151,10 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
     const isAdmin = await IsAdmin(session)
-    if (!isAdmin) {
-        return {
-            redirect: {
-                destination: "/class",
-                permanent: false
-            }
-        }
+    if(session){
+        if(!isAdmin) return LoggedInRedirect("/class")
+    }else{
+        return LoggedOutRedirect()
     }
     
     return {

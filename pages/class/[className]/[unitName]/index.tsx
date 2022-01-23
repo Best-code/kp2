@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
-import {serverRoute} from "../../../../config"
+import { serverRoute } from "../../../../config"
+import Link from "next/link";
 
-const Class = ({ handouts, videos, isAdmin, unitName, className } : any) => {
+const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
 
   const Handouts = () => {
     return (
@@ -90,20 +91,23 @@ const Class = ({ handouts, videos, isAdmin, unitName, className } : any) => {
   }
 
   const AddButton = (link: string) => {
-      return (
-        <div className="grid place-content-center ">
-          <a href={`/class/${className}/${unitName}/${link}`}>
-            <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
-          </a>
-        </div>
-      )
+    return (
+      <div className="grid place-content-center ">
+        <a href={`/class/${className}/${unitName}/${link}`}>
+          <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
+        </a>
+      </div>
+    )
   }
 
 
   return <div className="py-6">
-    <h1 className="text-center text-4xl font-bold">
-      Unit {unitName}
-    </h1>
+    <div className="flex flex-col justify-center items-center">
+      <Link href={`${serverRoute}/class/${className}`}><span className="text-6xl font-bold pb-2 hover:cursor-pointer text-indigo-700">{className}</span></Link>
+      <h1 className="text-4xl font-bold">
+        Unit {unitName}
+      </h1>
+    </div>
     <div className="py-8 lg:py-4">
       {VideosAndHandouts()}
     </div>

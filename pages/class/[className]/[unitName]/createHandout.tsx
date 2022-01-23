@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
 import { serverRoute } from "../../../../config";
+import { LoggedInRedirect, LoggedOutRedirect } from "../../../../helpers/redirect";
 
-const CreateHandoutForm = ({ unitName, className, unitId, isAdmin } : any) => {
+const CreateHandoutForm = ({ unitName, className, unitId, isAdmin }: any) => {
     const [name, setName] = useState("")
 
     const router = useRouter();
@@ -81,13 +82,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const unitId = await unitIdRes.json()
 
     const isAdmin = await IsAdmin(session)
-    if (!isAdmin) {
-        return {
-            redirect: {
-                destination: "/api/auth/signin",
-                permanent: false
-            }
-        }
+    if (session) {
+        if (!isAdmin) return LoggedInRedirect(`/class/${className}/${unitName}`)
+    } else {
+        return LoggedOutRedirect()
     }
 
     return {
