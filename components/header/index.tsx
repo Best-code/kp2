@@ -15,13 +15,7 @@ let navigation = [
   { name: 'Classes', href: '/class', current: false },
   { name: 'Contact Me', href: 'mailto:brandy.kilpatrick@stjohns.k12.fl.us', current: false },
   { name: 'Extra Practice', href: 'https://www.sciencegeek.net/Chemistry/taters/directory.shtml', current: false },
-  { name: 'Forgot Password', href: '#', current: false },
   { name: "", href: '#', current: false }
-]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
 ]
 
 function classNames(...classes: any[]) {
@@ -42,7 +36,7 @@ export const Header = () => {
           >
             <span className="sr-only">View notifications</span>
             <div className="hidden md:block">
-              <button onClick={() => signOut()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Out</button>
+        <button onClick={() => signOut()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-lg font-medium">Sign Out</button>
             </div>
           </button>
 
@@ -85,7 +79,6 @@ export const Header = () => {
                           {item.name}
                         </a>
                       ))}
-                      {session && session.user && session.user.email}
                     </div>
                   </div>
                 </div>

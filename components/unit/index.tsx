@@ -7,10 +7,10 @@ interface UnitInt {
 import Link from "next/link"
 
 export const UnitComponent = (props: UnitInt) => {
-    return <div>
+    return <div className="pb-2 bg-white">
         <Link href={`/class/${props.class}/${props.name}`}>
-        <div className="flex hover:cursor-pointer shadow-lg" key={props.key}>
-            <div className="p-4 text-2xl font-semibold">
+        <div className="flex pl-4 items-center justify-left hover:cursor-pointer h-16 shadow-lg" key={props.key}>
+            <div className="flex items-center justify-center text-2xl font-semibold">
                 {props.name}
             </div>
         </div>

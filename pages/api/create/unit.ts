@@ -1,12 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react";
 import { prisma } from "../../../db";
+import IsAdmin from "../../../helpers/IsAdmin";
 
 const CreateUnit = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, classId, handouts, videos } = req.body;
 
-    const Session = await getSession({ req })
-    if (Session) {
+    const session = await getSession({ req })
+
+    let isAdmin = false;
+    if (session) {
+        isAdmin = await IsAdmin(session)
+    }
+
+    if (isAdmin) {
         const Unit = await prisma.unit.create({
             data: {
                 name,

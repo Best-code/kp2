@@ -11,10 +11,10 @@ const Class = ({ classInfo, units, isAdmin } : any) => {
     const displayUnits = () => {
         if (units.length > 0) {
             return <div className="flex-col flex justify-center items-center">
-                <h1 className="text-3xl font-semibold flex items-center justify-center pb-4">
+                <h1 className="text-4xl font-bold flex items-center justify-center pb-4">
                     Units
                 </h1>
-                <div className="w-2/3">
+                <div className="w-4/5 md:w-2/3 bg-indigo-200 p-2 md:p-4">
                     {units.map((unit : Unit) =>
                         <UnitComponent class={classInfo.name} key={unit.id} name={unit.name} />
                     )}
@@ -42,7 +42,7 @@ const Class = ({ classInfo, units, isAdmin } : any) => {
     }
 
     return <div>
-        <h1 className="text-center text-4xl font-bold py-6">
+        <h1 className="text-center text-6xl text-indigo-700 font-bold py-6">
             Welcome to {classInfo.name}
         </h1>
         <div>

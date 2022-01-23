@@ -13,20 +13,24 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
 
   const Handouts = () => {
     return (
-      <div className="flex flex-col justify-center items-center p-4">
-        {handouts.map((handout: Handout) =>
-          <HandoutComponent key={handout.id} name={handout.name} />
-        )}
-      </div>
+      <div className="bg-indigo-200 flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center p-4 w-full md:w-2/3">
+          {handouts.map((handout: Handout) =>
+            <HandoutComponent key={handout.id} name={handout.name} />
+          )}
+        </div>
+      </div >
     )
   }
 
   const Videos = () => {
     return (
-      <div className="flex flex-col justify-center items-center p-4">
-        {videos.map((video: Video) =>
-          <VideoComponent link={video.link} key={video.id} name={video.name} />
-        )}
+      <div className="bg-indigo-200 flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center p-4 w-full md:w-2/3">
+          {videos.map((video: Video) =>
+            <VideoComponent link={video.link} key={video.id} name={video.name} />
+          )}
+        </div>
       </div>
     )
   }
@@ -51,15 +55,19 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
               Handouts
             </h1>
             {NothingHere(handouts)}
-            {Handouts()}
+            <div className="md:mx-12">
+              {Handouts()}
+            </div>
             {isAdmin && AddButton("createHandout")}
           </div>
           <div className="w-1/2 h-screen">
             <h1 className="flex justify-center text-3xl font-semibold">
               Videos
             </h1>
-            {NothingHere(videos)}
-            {Videos()}
+              {NothingHere(videos)}
+            <div className="md:mx-12">
+              {Videos()}
+            </div>
             {isAdmin && AddButton("createVideo")}
           </div>
         </div>

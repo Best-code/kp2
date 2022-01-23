@@ -2,13 +2,13 @@ import type { GetServerSideProps, NextPage } from 'next'
 
 const Home: NextPage = ({widgetLoaded} : any) => {
 
-  return <div className="lg:flex">
+   return <div className="lg:flex">
     <div className="flex flex-col px-8 items-center">
-      <h1 className="text-center text-4xl  lg:text-5xl font-bold pt-10 shadow w-screen md:w-full md:shadow-none">
+      <h1 className="text-center text-4xl  lg:text-6xl font-bold pt-10 md:pb-12 lg:pb-16 xl:pb-0 w-screen md:w-full">
         Welcome to Mrs. Kilpatricks Science Webite
       </h1>
       <div className="flex lg:w-4/5 justify-center items-center md:h-2/3 h-screen">
-        <p className="text-left text-2xl font-semibold pt-2 pb-16">
+        <p className="text-left text-2xl md:text-3xl  font-semibold pb-32 md:pb-0">
           Dear Parents and Students,
           <br />
           <br />
@@ -33,7 +33,7 @@ const Home: NextPage = ({widgetLoaded} : any) => {
       </div>
     </div>
     {widgetLoaded && (
-    <div className="flex w-screen justify-center overflow-hidden h-screen">
+    <div className="flex w-screen justify-center overflow-scroll h-screen">
       <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
       <a className="flex twitter-timeline" href="https://twitter.com/Chemteach84" data-width="399" ></a>
     </div>
