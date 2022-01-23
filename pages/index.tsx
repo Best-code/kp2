@@ -2,11 +2,9 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
 
-
-
   return <div className="lg:flex">
     <div className="flex flex-col px-8 items-center">
-      <h1 className="text-center text-4xl font-bold py-6 shadow w-screen md:w-full md:shadow-none">
+      <h1 className="text-center text-4xl  lg:text-5xl font-bold pt-10 shadow w-screen md:w-full md:shadow-none">
         Welcome to Mrs. Kilpatricks Science Webite
       </h1>
       <div className="flex lg:w-4/5 justify-center items-center md:h-2/3 h-screen">
@@ -20,7 +18,7 @@ const Home: NextPage = () => {
           I will try to keep it updated as often as possible. If you have any questions or concerns
           feel free to contact me at&nbsp;
           <a href='mailto:brandy.kilpatrick@stjohns.k12.fl.us' className="underline">
-        brandy.kilpatrick@stjohns.k12.fl.us
+            brandy.kilpatrick@stjohns.k12.fl.us
           </a>
           <br />
           <br />

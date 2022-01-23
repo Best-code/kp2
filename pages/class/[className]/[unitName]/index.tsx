@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { Handout, Video } from "@prisma/client";
 import VideoComponent from "../../../../components/videos";
 import HandoutComponent from "../../../../components/handout";

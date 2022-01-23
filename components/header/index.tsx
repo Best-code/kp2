@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAtom, faFlask } from '@fortawesome/free-solid-svg-icons'
 import { signIn, signOut, useSession } from "next-auth/react"
 import Link from 'next/link'
+import Waves from "../waves"
 
 
 let navigation = [
@@ -51,7 +52,7 @@ export const Header = () => {
       navigation[6] = { name: 'Sign In', href: '/api/auth/signin/google', current: false }
       return (
         <div className="hidden md:block">
-          <button onClick={() => signIn()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</button>
+          <button onClick={() => signIn()} className="text-gray-300 hover:shadow hover:bg-indigo-800 hover:text-white px-3 py-2 rounded-md text-lg font-medium">Sign In</button>
         </div>
       )
     }
@@ -77,7 +78,7 @@ export const Header = () => {
                             item.current
                               ? 'bg-gray-900 text-white'
                               : 'text-gray-300 hover:bg-indigo-800 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium hover:shadow'
+                            'px-3 py-2 rounded-md text-lg font-medium hover:shadow'
                           )}
                           aria-current={item.current ? 'page' : undefined}
                         >
@@ -125,6 +126,9 @@ export const Header = () => {
           </>
         )}
       </Disclosure>
+      <div className="h-0 md:h-full invisible md:visible">
+        <Waves />
+      </div>
     </div>
   )
 }

@@ -11,7 +11,7 @@ const Class = ({ classInfo, units, isAdmin } : any) => {
     const displayUnits = () => {
         if (units.length > 0) {
             return <div className="flex-col flex justify-center items-center">
-                <h1 className="text-3xl font-semibold flex items-center justify-center">
+                <h1 className="text-3xl font-semibold flex items-center justify-center pb-4">
                     Units
                 </h1>
                 <div className="w-2/3">
