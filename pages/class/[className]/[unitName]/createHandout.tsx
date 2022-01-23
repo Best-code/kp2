@@ -3,6 +3,7 @@ import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
+import { serverRoute } from "../../../../config";
 
 const CreateHandoutForm = ({ unitName, className, unitId, isAdmin } : any) => {
     const [name, setName] = useState("")
@@ -76,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
     const { unitName, className } = context.query;
-    const unitIdRes = await fetch(`http://localhost:3000/api/units/name?name=${unitName}`)
+    const unitIdRes = await fetch(`${serverRoute}/api/units/name?name=${unitName}`)
     const unitId = await unitIdRes.json()
 
     const isAdmin = await IsAdmin(session)

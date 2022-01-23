@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../../helpers/IsAdmin";
+import {serverRoute} from "../../../../config"
 
 const Class = ({ handouts, videos, isAdmin, unitName, className } : any) => {
 
@@ -117,11 +118,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
 
   const { unitName, className } = context.query;
-  const unitIdRes = await fetch(`http://localhost:3000/api/units/name?name=${unitName}`)
+  const unitIdRes = await fetch(`${serverRoute}/api/units/name?name=${unitName}`)
   const unitId = await unitIdRes.json()
-  const handoutRes = await fetch(`http://localhost:3000/api/classes/handouts/?unitId=${unitId}`)
+  const handoutRes = await fetch(`${serverRoute}/api/classes/handouts/?unitId=${unitId}`)
   const handouts = await handoutRes.json()
-  const videoRes = await fetch(`http://localhost:3000/api/classes/videos/?unitId=${unitId}`)
+  const videoRes = await fetch(`${serverRoute}/api/classes/videos/?unitId=${unitId}`)
   const videos = await videoRes.json()
   let isAdmin = await IsAdmin(session)
 

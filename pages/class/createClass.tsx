@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import IsAdmin from "../../helpers/IsAdmin";
 import { GetServerSideProps } from "next";
 
-const CreateClassForm = ({ isAdmin } : any) => {
+const CreateClassForm = ({ isAdmin }:any) => {
     const [name, setName] = useState("")
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
@@ -28,6 +28,7 @@ const CreateClassForm = ({ isAdmin } : any) => {
             body : `${image}`
         })
         */
+       
         fetch(`/api/create/class`, {
             body: JSON.stringify({
                 name,

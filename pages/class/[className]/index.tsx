@@ -5,6 +5,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Unit } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../helpers/IsAdmin";
+import { serverRoute } from "../../../config";
 
 const Class = ({ classInfo, units, isAdmin } : any) => {
     const displayUnits = () => {
@@ -59,9 +60,9 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
     const {className} = context.query;
-    const classInfoRes = await fetch(`http://localhost:3000/api/classes/class?name=${className}`)
+    const classInfoRes = await fetch(`${serverRoute}/api/classes/class?name=${className}`)
     const classInfo = await classInfoRes.json()
-    const unitsRes = await fetch(`http://localhost:3000/api/classes/units/?classId=${classInfo.id}`)
+    const unitsRes = await fetch(`${serverRoute}/api/classes/units/?classId=${classInfo.id}`)
     const units = await unitsRes.json()
 
     const isAdmin = await IsAdmin(session)

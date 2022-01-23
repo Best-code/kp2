@@ -3,10 +3,10 @@ import { getSession, useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import IsAdmin from "../../../helpers/IsAdmin";
+import { serverRoute } from "../../../config";
 
 const CreateUnitForm = ({ isAdmin, classInfo } :any) => {
     const [name, setName] = useState("")
-    const { data: session, status } = useSession();
 
     const router = useRouter();
 
@@ -79,6 +79,9 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
     const {className} = context.query
+    const classInfoRes = await fetch(`${serverRoute}/api/classes/class?name=${className}`)
+    const classInfo = await classInfoRes.json()
+    console.log(classInfo)
     const isAdmin = await IsAdmin(session)
     if (!isAdmin) {
         return {
@@ -90,7 +93,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     }
     
     return {
-        props: { isAdmin }
+        props: { isAdmin, classInfo }
     }
 
 }

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import IsAdmin from '../../helpers/IsAdmin'
+import { serverRoute } from '../../config'
 
 export const ClassesPage: NextPage = ({ courses, isAdmin } : any) => {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default ClassesPage;
 export const getServerSideProps : GetServerSideProps = async (context) => {
   const session = await getSession(context)
 
-  const classesRes = await fetch('http://localhost:3000/api/classes')
+  const classesRes = await fetch(`${serverRoute}/api/classes`)
   const courses = await classesRes.json()
 
   const isAdmin = await IsAdmin(session)
