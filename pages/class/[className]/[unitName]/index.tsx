@@ -35,72 +35,54 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
     )
   }
 
-  const NothingHere = (name: Handout[] | Video[]) => {
-    if (name.length == 0) {
-      return (
-        <p className="flex justify-center items-center text-2xl font-semibold py-2">
-          Nothing To See Here
-        </p>)
-    } else {
-      return <div className="w-screen bg-red-900"></div>
-    }
+  const NothingHere = () => {
+    return (
+      <p className="flex justify-center items-center text-2xl font-semibold py-2">
+        Nothing To See Here
+      </p>)
+
   }
 
   const VideosAndHandouts = () => {
-    if (videos.length > 0 || handouts.length > 0) {
-      return (
-        <div className="flex justify-center items-center">
-          <div className="w-1/2 h-screen">
-            <h1 className="flex justify-center items-center text-3xl font-semibold">
+    return (
+      <div className="flex justify-center">
+        <div className="grid md:grid-cols-2 w-5/6 gap-3">
+          <div className="flex flex-col items-center">
+            <span className="text-4xl font-semibold pb-2">
               Handouts
-            </h1>
-            {NothingHere(handouts)}
-            <div className="md:mx-12">
-              {Handouts()}
+            </span>
+            <div className="bg-indigo-200 w-full max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
+              <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
+                {handouts.length > 0 && handouts.map((handout: Handout) =>
+                  <HandoutComponent key={handout.id} name={handout.name} />
+                )}
+                {handouts.length == 0 && NothingHere()}
+              </div>
             </div>
-            {isAdmin && AddButton("createHandout")}
+            {AddButton("createHandout")}
           </div>
-          <div className="w-1/2 h-screen">
-            <h1 className="flex justify-center text-3xl font-semibold">
+          <div className="flex flex-col items-center">
+            <span className="text-4xl font-semibold pb-2">
               Videos
-            </h1>
-              {NothingHere(videos)}
-            <div className="md:mx-12">
-              {Videos()}
+            </span>
+            <div className="bg-indigo-200 w-full max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
+              <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
+                {videos.length > 0 && videos.map((video: Video) =>
+                  <VideoComponent key={video.id} name={video.name} link={video.link} />
+                )}
+                {videos.length == 0 && NothingHere()}
+              </div>
             </div>
-            {isAdmin && AddButton("createVideo")}
+            {AddButton("createVideo")}
           </div>
         </div>
-      )
-    } else {
-      return (
-        <div className="flex justify-center items-center">
-          <div className="w-1/2 h-screen">
-            <h1 className="flex justify-center items-center text-3xl font-semibold">
-              Handouts
-            </h1>
-            <p className="flex justify-center items-center text-2xl font-semibold py-2">
-              Nothing To See Here
-            </p>
-            {isAdmin && AddButton("createHandout")}
-          </div>
-          <div className="w-1/2 h-screen">
-            <h1 className="flex justify-center text-3xl font-semibold">
-              Videos
-            </h1>
-            <p className="flex justify-center items-center text-2xl font-semibold py-2">
-              Nothing To See Here
-            </p>
-            {isAdmin && AddButton("createVideo")}
-          </div>
-        </div>
-      )
-    }
+      </div >
+    )
   }
 
   const AddButton = (link: string) => {
     return (
-      <div className="grid place-content-center ">
+      <div className="grid place-content-center mt-6">
         <a href={`/class/${className}/${unitName}/${link}`}>
           <FontAwesomeIcon className="w-24 h-24" icon={faPlusCircle} />
         </a>
@@ -111,7 +93,7 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
 
   return <div className="py-6">
     <div className="flex flex-col justify-center items-center">
-      <Link href={`${serverRoute}/class/${className}`}><span className="text-6xl font-bold pb-2 hover:cursor-pointer text-indigo-700">{className}</span></Link>
+      <Link href={`${serverRoute}/class/${className}`}><span className="text-6xl font-bold pb-4 hover:cursor-pointer text-indigo-700">{className}</span></Link>
       <h1 className="text-4xl font-bold">
         Unit {unitName}
       </h1>
