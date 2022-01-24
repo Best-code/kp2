@@ -59,7 +59,7 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
                 {handouts.length == 0 && NothingHere()}
               </div>
             </div>
-            {AddButton("createHandout")}
+            {isAdmin && AddButton("createHandout")}
           </div>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-semibold pb-2">
@@ -73,7 +73,7 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
                 {videos.length == 0 && NothingHere()}
               </div>
             </div>
-            {AddButton("createVideo")}
+            {isAdmin && AddButton("createVideo")}
           </div>
         </div>
       </div >
