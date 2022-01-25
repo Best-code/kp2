@@ -10,7 +10,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import { useState } from "react"
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Checkbox, DialogActions } from '@mui/material'
-
+import Delete from "../delete"
 
 interface ClassInt {
   name: string
@@ -23,34 +23,32 @@ interface ClassInt {
 
 export const ClassCard = (props: ClassInt) => {
 
-  const [check, setCheck] = useState(false)
-  const [error, setError] = useState(false)
+  /*const [check, setCheck] = useState(false)
+  const [error, setError] = useState(false)*/
 
   const router = useRouter();
   const HandleDelete = () => {
-    if (check) {
-      fetch(`/api/delete/class`, {
-        body: JSON.stringify({
-          name: props.name,
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "POST"
-      })
-      router.reload()
-    } else {
-      setError(true)
-    }
+    fetch(`/api/delete/class`, {
+      body: JSON.stringify({
+        name: props.name,
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    })
+    router.reload()
+
   }
 
-  const DeleteError = () => {
+  /*const DeleteError = () => {
     return (
       <Alert severity="warning">You must check the box.</Alert>
     )
-  }
+  }*/
 
   const [dialog, setDialog] = useState(false)
+  /*
   const DialogComponent = () => {
     return (
       <div>
@@ -73,7 +71,7 @@ export const ClassCard = (props: ClassInt) => {
         </Dialog>
       </div>
     )
-  }
+  }*/
 
 
   const DeleteClass = () => {
@@ -110,7 +108,8 @@ export const ClassCard = (props: ClassInt) => {
             Share
           </Button>
           {props.isAdmin && DeleteClass()}
-          <DialogComponent />
+          {/*<DialogComponent />*/}
+          <Delete name={props.name} HandleDelete={HandleDelete} dialog={dialog} />
         </CardActions>
       </Card>
     </div>
