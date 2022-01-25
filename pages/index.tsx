@@ -5,9 +5,11 @@ const Home: NextPage = ({ widgetLoaded }: any) => {
 
   return <div className="lg:flex">
     <div className="flex flex-col px-8 items-center">
-      <h1 className="text-center text-4xl  lg:text-6xl font-bold pt-10 md:pb-12 lg:pb-16 xl:pb-0 w-screen md:w-full">
-        Welcome to Mrs. Kilpatricks Science Webite
-      </h1>
+      <div className={"md:pb-16"}>
+        <h1 className={"text-center text-4xl  lg:text-6xl font-bold pt-10 md:pb-12 lg:pb-16 xl:pb-8 w-screen md:w-full"}>
+          Welcome to Mrs. Kilpatricks Science Webite
+        </h1>
+      </div>
       <div className="flex lg:w-4/5 justify-center items-center md:h-2/3 h-screen">
         <p className="text-left text-2xl md:text-3xl  font-semibold pb-32 md:pb-0">
           Dear Parents and Students,
@@ -47,7 +49,7 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
-  let widgetRes : any;
+  let widgetRes: any;
   try {
     widgetRes = await fetch("https://platform.twitter.com/widgets.js")
   } catch (error) {

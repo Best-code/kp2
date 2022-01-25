@@ -8,6 +8,7 @@ import IsAdmin from "../../../helpers/IsAdmin";
 import { serverRoute } from "../../../config";
 
 const Class = ({ classInfo, units, isAdmin }: any) => {
+
     const displayUnits = () => {
         if (units.length > 0) {
             return <div className="flex-col flex justify-center items-center">

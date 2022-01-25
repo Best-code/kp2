@@ -3,12 +3,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Alert, Button, CardActionArea, CardActions, FormControlLabel } from '@mui/material';
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useSession } from 'next-auth/react';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+import { useState } from "react"
+import { Dialog, DialogTitle, DialogContent, DialogContentText, Checkbox, DialogActions } from '@mui/material'
+
 
 interface ClassInt {
   name: string
@@ -20,24 +22,66 @@ interface ClassInt {
 
 
 export const ClassCard = (props: ClassInt) => {
+
+  const [check, setCheck] = useState(false)
+  const [error, setError] = useState(false)
+
   const router = useRouter();
   const HandleDelete = () => {
-    fetch(`/api/delete/class`, {
-            body: JSON.stringify({
-                name: props.name,
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            },
-            method: "POST"
-        })
-        router.reload()
+    if (check) {
+      fetch(`/api/delete/class`, {
+        body: JSON.stringify({
+          name: props.name,
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST"
+      })
+      router.reload()
+    } else {
+      setError(true)
+    }
   }
 
-  const DeleteClass = () => {
-      return <div className="flex justify-end items-end w-full">
-        <FontAwesomeIcon className="w-8 h-8 hover:cursor-pointer hover:w-16 hover:h-16" onClick={HandleDelete} icon={faTrashCan} />
+  const DeleteError = () => {
+    return (
+      <Alert severity="warning">You must check the box.</Alert>
+    )
+  }
+
+  const [dialog, setDialog] = useState(false)
+  const DialogComponent = () => {
+    return (
+      <div>
+        <Dialog open={dialog} onClose={() => setDialog(false)}>
+          <DialogTitle>Delete {props.name}</DialogTitle>
+          <DialogContent>
+            {error && <DeleteError />}
+            <DialogContentText>
+              Are you sure you would like to continue, this will permanently delete this class and it can not be undone.
+            </DialogContentText>
+            <FormControlLabel
+              label={`I want to delete the class ${props.name}`}
+              control={<Checkbox checked={check} onChange={(e) => setCheck(e.target.checked)} />
+              } />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialog(false)}>Cancel</Button>
+            <Button onClick={HandleDelete}>Proceed</Button>
+          </DialogActions>
+        </Dialog>
       </div>
+    )
+  }
+
+
+  const DeleteClass = () => {
+    return <div className="flex justify-end items-end w-full">
+      <button onClick={() => setDialog(true)}>
+        <FontAwesomeIcon className="w-8 h-8 hover:cursor-pointer hover:w-16 hover:h-16" icon={faTrashCan} />
+      </button>
+    </div>
   }
 
   return (
@@ -66,6 +110,7 @@ export const ClassCard = (props: ClassInt) => {
             Share
           </Button>
           {props.isAdmin && DeleteClass()}
+          <DialogComponent />
         </CardActions>
       </Card>
     </div>
