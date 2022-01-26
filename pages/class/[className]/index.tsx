@@ -18,7 +18,7 @@ const Class = ({ classInfo, units, isAdmin }: any) => {
                 <div className="w-4/5 md:w-2/3 bg-indigo-200 p-2 max-h-[26rem] md:max-h-[32rem] lg:max-h-[34rem]">
                     <div className="grid md:grid-cols-2 md:gap-3 gap-2 max-h-[25rem] md:max-h-[30rem] lg:max-h-[32em] overflow-scroll">
                         {units.map((unit: Unit) =>
-                            <UnitComponent class={classInfo.name} key={unit.id} name={unit.name} />
+                            <UnitComponent class={classInfo} key={unit.id} name={unit.name} isAdmin={isAdmin} />
                         )}
                     </div>
                 </div>
