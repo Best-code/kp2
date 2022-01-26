@@ -67,7 +67,12 @@ export const ClassCard = (props: ClassInt) => {
               } />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setDialog(false)}>Cancel</Button>
+            <Button onClick={() => {
+                setDialog(false)
+                 setError(false)
+                 setCheck(false)
+                 }
+                 }>Cancel</Button>
             <Button onClick={HandleDelete}>Proceed</Button>
           </DialogActions>
         </Dialog>
@@ -86,7 +91,7 @@ export const ClassCard = (props: ClassInt) => {
 
   return (
     <div key={props.key} className="mx-auto px-2 pb-4 md:pb-12">
-      <Card sx={{ maxWidth: 345 }} className="md:w-96">
+      <Card className="max-w-[30rem]">
         <Link href={`/class/${props.name}`}>
           <CardActionArea>
             <CardMedia className="h-48"

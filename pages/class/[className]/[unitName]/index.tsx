@@ -9,27 +9,29 @@ import IsAdmin from "../../../../helpers/IsAdmin";
 import { serverRoute } from "../../../../config"
 import Link from "next/link";
 
-const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
+const Class = ({ handouts, videos, isAdmin, unitName, className, unitId }: any) => {
 
   const Handouts = () => {
     return (
-      <div className="bg-indigo-200 flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center p-4 w-full md:w-2/3">
-          {handouts.map((handout: Handout) =>
-            <HandoutComponent key={handout.id} name={handout.name} />
+      <div className="bg-indigo-200 w-full min-h-[5rem] max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
+        <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
+          {handouts.length > 0 && handouts.map((handout: Handout) =>
+            <HandoutComponent key={handout.id} name={handout.name} unitName={unitName} unitId={unitId} isAdmin={isAdmin} />
           )}
+          {handouts.length == 0 && NothingHere()}
         </div>
-      </div >
+      </div>
     )
   }
 
   const Videos = () => {
     return (
-      <div className="bg-indigo-200 flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center p-4 w-full md:w-2/3">
-          {videos.map((video: Video) =>
-            <VideoComponent link={video.link} key={video.id} name={video.name} />
+      <div className="bg-indigo-200 w-full min-h-[5rem] max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
+        <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
+          {videos.length > 0 && videos.map((video: Video) =>
+            <VideoComponent link={video.link} key={video.id} name={video.name} unitName={unitName} unitId={unitId} isAdmin={isAdmin} />
           )}
+          {videos.length == 0 && NothingHere()}
         </div>
       </div>
     )
@@ -40,7 +42,6 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
       <p className="flex justify-center items-center text-2xl font-semibold py-2">
         Nothing To See Here
       </p>)
-
   }
 
   const VideosAndHandouts = () => {
@@ -51,28 +52,14 @@ const Class = ({ handouts, videos, isAdmin, unitName, className }: any) => {
             <span className="text-4xl font-semibold pb-2">
               Handouts
             </span>
-            <div className="bg-indigo-200 w-full max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
-              <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
-                {handouts.length > 0 && handouts.map((handout: Handout) =>
-                  <HandoutComponent key={handout.id} name={handout.name} />
-                )}
-                {handouts.length == 0 && NothingHere()}
-              </div>
-            </div>
+            {Handouts()}
             {isAdmin && AddButton("createHandout")}
           </div>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-semibold pb-2">
               Videos
             </span>
-            <div className="bg-indigo-200 w-full max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
-              <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
-                {videos.length > 0 && videos.map((video: Video) =>
-                  <VideoComponent key={video.id} name={video.name} link={video.link} />
-                )}
-                {videos.length == 0 && NothingHere()}
-              </div>
-            </div>
+            {Videos()}
             {isAdmin && AddButton("createVideo")}
           </div>
         </div>
@@ -121,6 +108,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props:
-      { videos, isAdmin, unitName, className, handouts }
+      { videos, isAdmin, unitName, className, handouts, unitId }
   }
 }
