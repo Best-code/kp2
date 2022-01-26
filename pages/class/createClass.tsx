@@ -2,34 +2,27 @@ import { useState } from "react";
 import { getSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import IsAdmin from "../../helpers/IsAdmin";
-import { GetServerSideProps } from "next";
-import {LoggedInRedirect, LoggedOutRedirect} from "../../helpers/redirect";
+import { GetServerSideProps, NextApiResponse } from "next";
+import { LoggedInRedirect, LoggedOutRedirect } from "../../helpers/redirect";
 
-const CreateClassForm = ({ isAdmin }:any) => {
+const CreateClassForm = ({ isAdmin, bearer }: any) => {
     const [name, setName] = useState("")
     const [def, setDef] = useState("")
     const [image, setImage] = useState("/chemistry_logo.jpg")
 
+    const HandleImage = (e:any) => {
+        e.prevent.default()
+        // fetch("/api/uploadImage", {
+        //     body: JSON.stringify({
+        //         bearer,
+        //         image
+        //     }),
+        //     method: "POST"
+        // })
+    }
+
     const HandleSubmit = (e: any) => {
         e.preventDefault();
-
-        /*
-        curl --request POST \
-        --url 'https://api.sirv.com/v2/files/upload?filename=%2Fpath%2Fto%2Fuploaded-image.jpg' \
-        --header 'authorization: Bearer BEARER_TOKEN_HERE' \
-        --header 'content-type: image/jpeg'  \
-        --data "@/path/to/local-file.jpg"
-        
-        const [bearer, setBearer] = useState("")
-        fetch(`https://api.sirv.com/v2/files/upload?filename=%2Fpath%2Fto%2Fuploaded-image.jpg`, {
-            headers: {
-                "authorization" : `Bearer ${bearer}}`,
-                "content-type" : "image/jpeg"
-            },
-            body : `${image}`
-        })
-        */
-       
         fetch(`/api/create/class`, {
             body: JSON.stringify({
                 name,
@@ -118,7 +111,11 @@ const CreateClassForm = ({ isAdmin }:any) => {
                                                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                                         >
                                                             {/*<span>Upload a file</span>*/}
-                                                            <input onChange={e => setImage(e.target.value)} id="image" name="file-upload" type="file" className="" />
+                                                            <input onChange={e => {
+                                                                setImage(e.target.value)
+                                                                HandleImage(e)
+                                                            }
+                                                            } id="image" name="file-upload" type="file" className="" />
                                                         </label>
                                                         <p className="pl-1">or drag and drop</p>
                                                     </div>
@@ -147,18 +144,37 @@ const CreateClassForm = ({ isAdmin }:any) => {
 
 export default CreateClassForm;
 
-export const getServerSideProps : GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context)
 
+
+    const clientId = process.env.SIRV_CLIENT_ID
+    const clientSecret = process.env.SIRV_CLIENT_SECRET
+
+
+    const bearerRes = await fetch(`https://api.sirv.com/v2/token`,
+        {
+            body: JSON.stringify({
+                clientId,
+                clientSecret
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+        })
+
+    const bearer = await bearerRes.json()
+
     const isAdmin = await IsAdmin(session)
-    if(session){
-        if(!isAdmin) return LoggedInRedirect("/class")
-    }else{
+    if (session) {
+        if (!isAdmin) return LoggedInRedirect("/class")
+    } else {
         return LoggedOutRedirect()
     }
-    
+
     return {
-        props: { isAdmin }
+        props: { isAdmin, bearer }
     }
 
 }
