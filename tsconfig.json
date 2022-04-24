@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/class/[className]/index.jd", "pages/api/classes.js", "pages/class/[className]/index.t=jsx", "pages/api/classes.js", "pages/class/[className]", "pages/api/create/handouts.js", "pages/api/image/add.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/class/[className]/index.jd", "pages/api/classes.js", "pages/class/[className]/index.t=jsx", "pages/api/classes.js", "pages/class/[className]", "pages/api/create/handouts.js", "pages/api/image/upload.js"],
   "exclude": ["node_modules"]
 }
