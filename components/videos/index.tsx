@@ -85,7 +85,9 @@ export const VideoComponent = (props: UnitInt) => {
     return <div className="bg-white flex justify-center items-center w-full">
         <div className="flex p-4 hover:cursor-pointer shadow-lg w-full h-full items-center" key={props.key}>
             <div className="flex text-2xl font-semibold grow hover:text-3xl">
+              <a href={props.link as string}>
                 {props.name}
+              </a>
             </div>
             {props.isAdmin && DeleteVideo()}
             <DialogComponent/>
