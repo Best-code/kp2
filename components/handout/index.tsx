@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Checkbox, DialogActions, Button, FormControlLabel, Alert } from '@mui/material'
+import { getSession } from "next-auth/react"
+import { GetServerSideProps } from "next"
 
 interface UnitInt {
   name: String
@@ -10,6 +12,7 @@ interface UnitInt {
   isAdmin: boolean
   unitName: string
   unitId: number
+  className: string
 }
 
 export const HandoutComponent = (props: UnitInt) => {
@@ -79,15 +82,19 @@ export const HandoutComponent = (props: UnitInt) => {
     </div>
   }
 
-  return <div className="bg-white flex justify-center items-center w-full">
-    <div className="flex p-4 hover:cursor-pointer shadow-lg w-full h-full items-center" key={props.key}>
-      <div className="flex text-2xl font-semibold grow">
-        {props.name}
-      </div>
-      {props.isAdmin && DeleteHandout()}
-      <DialogComponent />
-    </div>
-  </div>
+  return (
+    <a href={`/class/${props.className}/${props.unitName}/${props.name}`}>
+      <div className="bg-white flex justify-center items-center w-full">
+        <div className="flex p-4 hover:cursor-pointer shadow-lg w-full h-full items-center" key={props.key}>
+          <div className="flex text-2xl font-semibold grow">
+            {props.name}
+          </div>
+          {props.isAdmin && DeleteHandout()}
+          <DialogComponent />
+        </div>
+      </div >
+    </a>
+  )
 }
 
 

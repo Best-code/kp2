@@ -17,7 +17,7 @@ const Class = ({ handouts, videos, isAdmin, unitName, className, unitId }: any) 
       <div className="bg-indigo-200 w-full min-h-[5rem] max-h-[24rem] md:max-h-[30rem] lg:max-h-[34rem]">
         <div className="grid lg:grid-cols-2 gap-2 md:gap-3 max-h-[23rem] md:max-h-[28rem] lg:max-h-[32em] overflow-scroll p-2">
           {handouts.length > 0 && handouts.map((handout: Handout) =>
-            <HandoutComponent key={handout.id} name={handout.name} unitName={unitName} unitId={unitId} isAdmin={isAdmin} />
+            <HandoutComponent className={className} key={handout.id} name={handout.name} unitName={unitName} unitId={unitId} isAdmin={isAdmin} />
           )}
           {handouts.length == 0 && NothingHere()}
         </div>

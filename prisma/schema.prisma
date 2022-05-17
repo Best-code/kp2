@@ -37,6 +37,7 @@ model Handout {
   unitId Int?
   name   String
   unit   Unit?  @relation(fields: [unitId], references: [id])
+  contentId String?
 }
 
 enum Role {
