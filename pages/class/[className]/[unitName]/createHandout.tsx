@@ -8,6 +8,7 @@ import { LoggedInRedirect, LoggedOutRedirect } from "../../../../helpers/redirec
 
 const CreateHandoutForm = ({ unitName, className, unitId, isAdmin }: any) => {
     const [name, setName] = useState("")
+    const [contentId, setContentId] = useState("")
 
     const router = useRouter();
 
@@ -16,7 +17,8 @@ const CreateHandoutForm = ({ unitName, className, unitId, isAdmin }: any) => {
         fetch(`/api/create/handout`, {
             body: JSON.stringify({
                 name,
-                unitId
+                unitId,
+                contentId
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -49,6 +51,21 @@ const CreateHandoutForm = ({ unitName, className, unitId, isAdmin }: any) => {
                                                         id="name"
                                                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
                                                         placeholder="Worksheet One"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-span-3 sm:col-span-2">
+                                                <label htmlFor="class-name" className="block text-sm font-medium text-gray-700">
+                                                    Contentful Entry
+                                                </label>
+                                                <div className="mt-1 flex rounded-md shadow-sm">
+                                                    <input
+                                                        onChange={e => setContentId(e.target.value)}
+                                                        type="text"
+                                                        name="unit-name"
+                                                        id="name"
+                                                        className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+                                                        placeholder="Contentful Entry Id"
                                                     />
                                                 </div>
                                             </div>

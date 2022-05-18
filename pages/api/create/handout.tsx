@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 import IsAdmin from "../../../helpers/IsAdmin";
 
 const CreteHandout = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { name, unitId } = req.body;
+    const { name, unitId, contentId } = req.body;
 
     const session = await getSession({ req })
 
@@ -17,6 +17,7 @@ const CreteHandout = async (req: NextApiRequest, res: NextApiResponse) => {
         const Unit = await prisma.handout.create({
             data: {
                 name,
+                contentId,
                 unit: { connect: { id: unitId } },
             }
         })
