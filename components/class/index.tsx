@@ -15,7 +15,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, Checkbox, Dialog
 interface ClassInt {
   name: string
   def: string
-  image: string
+  entryId: string
   key: number
   isAdmin: boolean
 }
@@ -25,6 +25,7 @@ export const ClassCard = (props: ClassInt) => {
 
   const [check, setCheck] = useState(false)
   const [error, setError] = useState(false)
+
 
   const router = useRouter();
   const HandleDelete = () => {
@@ -68,11 +69,11 @@ export const ClassCard = (props: ClassInt) => {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => {
-                setDialog(false)
-                 setError(false)
-                 setCheck(false)
-                 }
-                 }>Cancel</Button>
+              setDialog(false)
+              setError(false)
+              setCheck(false)
+            }
+            }>Cancel</Button>
             <Button onClick={HandleDelete}>Proceed</Button>
           </DialogActions>
         </Dialog>
@@ -97,7 +98,7 @@ export const ClassCard = (props: ClassInt) => {
             <CardMedia className="h-48"
               component="img"
               height="140"
-              src={`https://ysbyzygo.sirv.com/kp2/` + props.image}
+              src={`https://ysbyzygo.sirv.com/kp2/` + props.entryId}
               alt={props.name}
             />
             <CardContent>
@@ -112,7 +113,9 @@ export const ClassCard = (props: ClassInt) => {
         </Link>
         <CardActions className="flex">
           <Button size="small" color="primary">
-            Share
+            <a href={`mailto:test@example.com?subject=Check out Mrs.Kilpatrick's ${props.name} class!&body=Here is the link!%0ahttps://kilpatty.vercel.app${router.pathname}/${props.name}`}>
+              Share
+            </a>
           </Button>
           {props.isAdmin && DeleteClass()}
           <DialogComponent />

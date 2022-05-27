@@ -19,7 +19,7 @@ model Unit {
   id       Int       @id @default(autoincrement())
   classId  Int?
   name     String
-  class    Class?    @relation(fields: [classId], references: [id])
+  class    Class?    @relation(fields: [classId], references: [id], onDelete: Cascade)
   handouts Handout[]
   videos   Video[]
 }
@@ -29,7 +29,7 @@ model Video {
   unitId Int?
   name   String
   link   String
-  unit   Unit?  @relation(fields: [unitId], references: [id])
+  unit   Unit?  @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
 model Handout {
@@ -37,7 +37,7 @@ model Handout {
   unitId Int?
   name   String
   contentId String?
-  unit   Unit?  @relation(fields: [unitId], references: [id])
+  unit   Unit?  @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

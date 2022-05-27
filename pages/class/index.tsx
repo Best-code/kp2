@@ -26,7 +26,7 @@ export const ClassesPage: NextPage = ({ courses, isAdmin }: any) => {
     if (courses.length > 0) {
       return <div className="grid xl:grid-cols-3 grid-cols-2 justify-center items-center lg:px-24 md:px-12 py-6">
         {courses.map((course: Class) =>
-          <ClassCard key={course.id} name={course.name} def={course.def} image={course.image} isAdmin={isAdmin} />
+          <ClassCard key={course.id} name={course.name} def={course.def} entryId={course.image} isAdmin={isAdmin} />
         )}
       </div>
     } else {

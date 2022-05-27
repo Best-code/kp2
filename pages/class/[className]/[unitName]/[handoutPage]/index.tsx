@@ -37,8 +37,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.log(handout, "as")
     var link = null
     if (handout.contentId) {
-        const entry: any = await client.getEntry(handout.contentId)
-        link = await entry.fields.handoutFile.fields.file.url
+        var entry: any = null
+        try {
+            entry = await client.getEntry(handout.contentId)
+        } catch (e) {
+            
+        }
+        if (entry) {
+            link = await entry.fields.handoutFile.fields.file.url
+        }
     }
 
     return {
@@ -48,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 
-const HandoutPage = ({ link , handoutPage}: any) => {
+const HandoutPage = ({ link, handoutPage }: any) => {
 
     if (link != null) {
         return (
