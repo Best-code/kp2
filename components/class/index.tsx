@@ -10,6 +10,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import { useState } from "react"
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Checkbox, DialogActions } from '@mui/material'
+import { serverRoute } from '../../config';
 
 
 interface ClassInt {
@@ -20,8 +21,31 @@ interface ClassInt {
   isAdmin: boolean
 }
 
+import * as contentful from "contentful"
+
+var client = contentful.createClient({
+    space: String(process.env.SPACE) as string,
+    accessToken: String(process.env.CONTENTFUL_ACCESS_TOKEN) as string
+});
+
 
 export const ClassCard = (props: ClassInt) => {
+
+  const [json, setJson] = useState();
+  const [entry, setEntry] = useState();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${serverRoute}/api/classes/class/?name=${props.name}`)
+      const json = await res.json();
+
+      const entry = await client.getEntry(json.image)
+      console.log(entry)
+    }
+
+    fetchData().catch(console.error)
+
+});
 
   const [check, setCheck] = useState(false)
   const [error, setError] = useState(false)
