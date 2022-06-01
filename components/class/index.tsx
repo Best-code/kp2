@@ -27,7 +27,7 @@ var client = contentful.createClient({
     space: String(process.env.SPACE) as string,
     accessToken: String(process.env.CONTENTFUL_ACCESS_TOKEN) as string
 });
-
+//
 
 export const ClassCard = (props: ClassInt) => {
 
